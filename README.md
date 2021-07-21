@@ -18,9 +18,10 @@ for ***N*** ingredients: the larger ***N*** is, the closer you will get to the a
 As a user, I would like to be able to:
 
 > - input an arbitrary number of ingredients and  core nutrient/mass ratios for a new recipe
+> - remove an existing recipe
 > - view a list of all recipes created so far
 > - view the ingredient proportions for an existing recipe
-> - change an ingredient or core nutrient/mass ratio of an ingredient in an existing recipe
+> - change an ingredient  in an existing recipe
 > - add a new ingredient and core nutrient/mass ratio to an existing recipe
 > - remove an ingredient from an existing recipe
 
