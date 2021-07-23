@@ -4,7 +4,7 @@
 Wouldn't it be nice to get a better idea on how to recreate your favourite food brands at home?<br>
 *Foodecipher* utilizes the Nutritional Facts and ingredient list on food packaging to estimate the
 proportions in which ingredients occur. <br>
-All that a user must provide are information listed on the Nutritional Facts and ***N - 1*** core nutrient/mass ratios for ***N*** ingredients: the larger ***N*** is, the closer you will get to the actual recipe.
+All that a user must provide are information listed on the Nutritional Facts and ***N*** core nutrient/mass ratios for ***N + 1*** ingredients: the larger ***N*** is, the closer you will get to the actual recipe.
 >**Example:** Some core nutrient/mass ratios for 1% fat milk (according to the USDA)
 > - Protein: 3.4 g / 100 g 
 > - Total Fat:     1 g / 100 g

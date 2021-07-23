@@ -6,11 +6,12 @@ import java.util.Map;
 // Represents a food item with its associated nutrition
 public class Ingredient {
 
-    // EFFECTS: an ingredient with given name and nutrient / mass ratios
+    // EFFECTS: an ingredient with given name and empty nutrient / mass ratio list;
     public Ingredient(String name) { }
 
+    // REQUIRES: nutrient type added does not already exist
     // MODIFIES: this
-    // EFFECTS: adds a unique nutrient / mass ratio to this
+    // EFFECTS: adds a nutrient / mass ratio to this
     public void addNutrientRatio(Nutrients nutrient, Ratio ratio) { }
 
     // MODIFIES: this

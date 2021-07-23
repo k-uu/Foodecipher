@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Represents a food recipe consisting of ingredients and their respective quantities
+// INVARIANT: there is n core nutrients and n + 1 ingredients
 public class Recipe {
 
     // EFFECTS: create a named recipe with Nutrition Facts with an empty ingredient and proportion list

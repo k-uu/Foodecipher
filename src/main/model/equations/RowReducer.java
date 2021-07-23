@@ -1,4 +1,4 @@
-package model;
+package model.equations;
 
 import java.util.ArrayList;
 
@@ -29,9 +29,8 @@ public abstract class RowReducer {
 
     // EFFECTS: finds the solution to an augmented matrix. The returned array list represents a column vector with n
     // elements, where n is the number of rows of the matrix. If there is no solution, return an empty ArrayList.
-    public static <E> ArrayList<E> findSolution(Matrix m) {
+    public static ArrayList<Double> findSolution(Matrix m) {
         return new ArrayList<>();
     }
-
 
 }
