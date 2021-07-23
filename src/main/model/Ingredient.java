@@ -1,7 +1,39 @@
 package model;
 
-// Represents a food item found in an ingredient item with its associated nutrition
+import java.util.HashMap;
+import java.util.Map;
+
+// Represents a food item with its associated nutrition
 public class Ingredient {
+
+    // EFFECTS: an ingredient with given name and nutrient / mass ratios
+    public Ingredient(String name) { }
+
+    // MODIFIES: this
+    // EFFECTS: adds a unique nutrient / mass ratio to this
+    public void addNutrientRatio(Nutrients nutrient, Ratio ratio) { }
+
+    // MODIFIES: this
+    // EFFECTS: removes an existing nutrient / mass ratio from this and returns true, else returns false
+    public boolean removeNutrientRatio(Nutrients nutrient) {
+        return false; //stub
+    }
+
+    // MODIFIES: this
+    // EFFECTS: change the ratio of an existing nutrient and return true, else return false
+    public boolean changeNutrientRatio(Nutrients nutrient, Ratio ratio) {
+        return false; //stub
+    }
+
+    // getters
+    public Map<Nutrients, Ratio> getNutrients() {
+        return new HashMap<>();
+    }
+
+    public String getName() {
+        return ""; //stub
+    }
+
 
 
 }
