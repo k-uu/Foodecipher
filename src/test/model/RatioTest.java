@@ -12,6 +12,7 @@ public class RatioTest {
 
     @Test
     public void testRatioSucceed() {
+
         try {
             r1 = new Ratio(8, 10);
             r2 = new Ratio(4, 3);
@@ -26,6 +27,7 @@ public class RatioTest {
 
     @Test
     public void testRatioFail() {
+
         try {
             r1 = new Ratio(10, 0);
             fail("divide by zero");
@@ -55,6 +57,13 @@ public class RatioTest {
         assertEquals(120, r1.getDenominator());
 
         checkInputs();
+
+        r4.add(r3);
+        assertEquals(r3.getNumerator(), r4.getNumerator());
+        assertEquals(r3.getDenominator(), r4.getDenominator());
+
+        assertEquals(-1, r3.getNumerator());
+        assertEquals(4, r3.getDenominator());
     }
 
     @Test
@@ -78,6 +87,13 @@ public class RatioTest {
         assertEquals(120, r1.getDenominator());
 
         checkInputs();
+
+        r4.subtract(r2);
+        assertEquals(-1 * r2.getNumerator(), r4.getNumerator());
+        assertEquals(r2.getDenominator(), r4.getDenominator());
+
+        assertEquals(4, r2.getNumerator());
+        assertEquals(3, r2.getDenominator());
     }
 
     @Test
@@ -106,22 +122,24 @@ public class RatioTest {
 
         r1.multiply(r4);
         assertEquals(0, r1.getNumerator());
-        assertEquals(120, r1.getDenominator());
+        assertEquals(1, r1.getDenominator());
 
         r1.multiply(0);
         assertEquals(0, r1.getNumerator());
-        assertEquals(120, r1.getDenominator());
+        assertEquals(1, r1.getDenominator());
 
         checkInputs();
     }
 
     @Test
     public void getValueTest() {
+
         r1 = new Ratio(8, 10);
         assertEquals(0.8, r1.getValue(), 0.05);
     }
 
     private void checkInputs() {
+
         assertEquals(4, r2.getNumerator());
         assertEquals(3, r2.getDenominator());
 
@@ -131,6 +149,4 @@ public class RatioTest {
         assertEquals(0, r4.getNumerator());
         assertEquals(1, r4.getDenominator());
     }
-
-
 }

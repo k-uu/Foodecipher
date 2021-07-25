@@ -17,6 +17,7 @@ public class NutritionFactsTest {
 
     @BeforeEach
     public void setup() {
+
         r1 = new Ratio(8, 10);
         r2 = new Ratio(6, 10);
 
@@ -24,11 +25,11 @@ public class NutritionFactsTest {
 
         map.put(Nutrients.CARBOHYDRATE, r1);
         map.put(Nutrients.FIBRE, r2);
-
     }
 
     @Test
     public void testNutritionFactsSucceed() {
+
         try {
             facts1 = new NutritionFacts(100, map);
         } catch (IllegalArgumentException e) {
@@ -37,11 +38,11 @@ public class NutritionFactsTest {
 
         assertEquals(100, facts1.getServingSize());
         assertEquals(map, facts1.getFacts());
-
     }
 
     @Test
     public void testNutritionFactsFailZero() {
+
         try {
             facts1 = new NutritionFacts(0, map);
             fail("divide by zero");
@@ -52,6 +53,7 @@ public class NutritionFactsTest {
 
     @Test
     public void testNutritionFactsFailNeg() {
+
         try {
             facts1 = new NutritionFacts(-10, map);
             fail("negative serving size");
@@ -59,7 +61,4 @@ public class NutritionFactsTest {
 
         }
     }
-
-
-
 }

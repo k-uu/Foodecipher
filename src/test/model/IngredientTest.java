@@ -15,6 +15,7 @@ public class IngredientTest {
 
     @BeforeEach
     public void setup() {
+
         i1 = new Ingredient("Milk");
         r1 = new Ratio(2, 10);
         r2 = new Ratio(3, 8);
@@ -22,12 +23,14 @@ public class IngredientTest {
 
     @Test
     public void testIngredient() {
+
         assertEquals("Milk", i1.getName());
         assertEquals(0, i1.getNutrients().size());
     }
 
     @Test
     public void addMultipleNutrientRatioTest() {
+
         i1.addNutrientRatio(Nutrients.CARBOHYDRATE, r1);
         i1.addNutrientRatio(Nutrients.SATURATED_FAT, r2);
 
@@ -38,6 +41,7 @@ public class IngredientTest {
 
     @Test
     public void removeMultipleNutrientRatioTrue() {
+
         i1.addNutrientRatio(Nutrients.CARBOHYDRATE, r1);
         i1.addNutrientRatio(Nutrients.SATURATED_FAT, r2);
 
@@ -51,6 +55,7 @@ public class IngredientTest {
 
     @Test
     public void removeNutrientRatioFalse() {
+
         assertFalse(i1.removeNutrientRatio(Nutrients.CARBOHYDRATE));
 
         i1.addNutrientRatio(Nutrients.CARBOHYDRATE, r1);
@@ -64,6 +69,7 @@ public class IngredientTest {
 
     @Test
     public void changeNutrientRatioTrue() {
+
         i1.addNutrientRatio(Nutrients.CARBOHYDRATE, r1);
 
         assertTrue(i1.changeNutrientRatio(Nutrients.CARBOHYDRATE, r2));
@@ -74,12 +80,12 @@ public class IngredientTest {
 
     @Test
     public void changeNutrientRatioFalse() {
+
         i1.addNutrientRatio(Nutrients.PROTEIN, r1);
 
         assertFalse(i1.changeNutrientRatio(Nutrients.CARBOHYDRATE, r2));
 
         assertEquals(1, i1.getNutrients().size());
         assertEquals(r1, i1.getNutrients().get(Nutrients.CARBOHYDRATE));
-
     }
 }
