@@ -2,30 +2,39 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 // Represents a list of food recipes
 public class RecipeList {
 
-    // EFFECTS: initializes an empty recipe list
-    public RecipeList() { }
+    private List<Recipe> recipes;
 
+    // EFFECTS: initializes an empty recipe list
+    public RecipeList() {
+
+        recipes = new ArrayList<>();
+    }
+
+    // REQUIRES: the recipe's name is not already in the list;
     // MODIFIES: this
     // EFFECTS: adds a recipe to the recipe list
-    public void addRecipe(Recipe recipe) { }
+    public void addRecipe(Recipe recipe) {
+
+        recipes.add(recipe);
+    }
+
 
     // MODIFIES: this
-    // EFFECTS: adds a recipe to the recipe list and returns true. If the recipe is not in list return false
+    // EFFECTS: removes a recipe from the recipe list and returns true. If the recipe is not in list return false
     public boolean removeRecipe(Recipe recipe) {
-        return false; //stub
+        for (Recipe r : recipes) {
+            if (recipe.getName().equals(r.getName())) {
+                recipes.remove(r);
+                return true;
+            }
+        }
+        return false;
     }
-
-    // REQUIRES: the recipeName exists in the RecipeList
-    // EFFECTS : returns the Recipe with the given recipeName
-    public Recipe getRecipe(String recipeName) {
-        return new Recipe("",
-                new NutritionFacts(10, new HashMap<>()), new ArrayList<>()); //stub
-    }
-
 
 
     // EFFECTS: returns a String representation of the recipe list with the given format:
@@ -35,6 +44,22 @@ public class RecipeList {
     //...
     @Override
     public String toString() {
-        return ""; //stub
+
+        String result = "* RECIPES *";
+        for (Recipe r : recipes) {
+            result = result.concat(System.lineSeparator() + r.getName());
+        }
+        return result;
+    }
+
+    //getters
+    public int getRecipeCount() {
+
+        return recipes.size();
+    }
+
+    public List<Recipe> getRecipes() {
+
+        return new ArrayList<>(recipes);
     }
 }

@@ -17,7 +17,7 @@ public enum Nutrients {
     }
 
     //EFFECTS: returns type of nutrient
-    public String getValue(String name) {
+    public String getValue() {
         return this.name;
     }
 }

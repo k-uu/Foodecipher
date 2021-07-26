@@ -36,51 +36,58 @@ public class Recipe {
 //        return false; //stub
 //    }
 
-    // EFFECTS: 
-
     // MODIFIES: this
     // EFFECTS: approximates the proportion of each ingredient in the recipe based on their individual
-    // nutrient / mass ratios. If the approximation finds a unique solution update this and return true,
-    // else return false. If a Nutrient is not in givenOrder, throw IllegalArgumentException
-    public boolean findProportions(List<Nutrients> givenOrder) throws IllegalArgumentException {
+    // nutrient / mass ratios. If a Nutrient is not in givenOrder, throw IllegalArgumentException
+    public void findProportions(List<Nutrients> givenOrder) throws IllegalArgumentException {
 
         Matrix m = new Matrix(ingredients.size());
-        List<Ratio> row = new ArrayList<>();
-        double[] c = new double[givenOrder.size()];
+        double[] augmented = new double[m.getRowCount()];
         Map<Nutrients, Ratio> nf = facts.getFacts();
         List<Ratio> botRow = new ArrayList<>();
+
         int count = 0;
 
         for (Nutrients n : givenOrder) {
-            row.clear();
-            for (int i = 0; i < ingredients.size(); i++) {
+            List<Ratio> row = new ArrayList<>();
+            for (int i = 0; i < m.getColumnCount(); i++) {
                 if (!ingredients.get(i).getNutrients().containsKey(n)) {
                     throw new IllegalArgumentException("Nutrient from givenOrder is not in ingredients");
                 }
                 row.add(ingredients.get(i).getNutrients().get(n));
             }
-            row.add(facts.getFacts().get(n));
             m.setRow(row, count);
-            c[count] = nf.get(n).getValue();
+            augmented[count] = nf.get(n).getValue();
             count++;
+        }
+        for (int c = 0; c < m.getColumnCount(); c++) {
             botRow.add(new Ratio(1,1));
         }
-        m.setRow(botRow, m.getRowCount() - 1);
+        m.setRow(botRow, count);
+        augmented[count] = 1.0;
 
-        RealMatrix coefficients = new Array2DRowRealMatrix(m.getMatrix());
+        solveMatrix(m.getMatrix(), augmented);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: finds the unique solution (proportions) to a matrix containing ingredient nutrient / mass ratios
+    // augmented with the recipes' nutrition facts. sets proportions to empty list if no solution is found
+    public void solveMatrix(double[][] matrix, double[]augment) {
+        RealMatrix coefficients = new Array2DRowRealMatrix(matrix);
 
         DecompositionSolver solver = new LUDecomposition(coefficients).getSolver();
 
-        RealVector constants = new ArrayRealVector(c);
+        RealVector constants = new ArrayRealVector(augment);
 
         if (!solver.isNonSingular()) {
-            return false;
+            proportions = new ArrayList<>();
+            return;
         }
         RealVector solution = solver.solve(constants);
-        for (int i = 0; i < m.getColumnCount(); i++) {
+        for (int i = 0; i < matrix.length; i++) {
             proportions.add((Double) solution.getEntry(i));
         }
-        return true;
+
     }
 
     // EFFECTS: returns a String for the recipe with the given format:
@@ -89,7 +96,13 @@ public class Recipe {
     // ...
     @Override
     public String toString() {
-        return ""; //stub
+        String result = "* " + name + " *";
+        int count = 0;
+        for (Ingredient i : ingredients) {
+            result = result.concat(System.lineSeparator() + i.getName() + ", Proportion: " + proportions.get(count));
+            count++;
+        }
+        return result;
     }
 
     // getters
