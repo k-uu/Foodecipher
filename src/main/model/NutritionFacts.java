@@ -2,14 +2,28 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 // Represents a Nutrition Facts label with a serving size and core nutrient amounts
 public class NutritionFacts {
 
+    private int servingSize;
+    private Map<Nutrients, Ratio> facts;
+
     // EFFECTS: creates a map of nutrition facts for the given positive servingSize. If zero or a negative value
-    // is given to serving size,
-    // throw IllegalArgumentException
-    public NutritionFacts(int servingSize, Map<Nutrients, Ratio> facts) throws IllegalArgumentException { }
+    // is given to serving size, throw IllegalArgumentException
+    public NutritionFacts(int servingSize, Map<Nutrients, Integer> facts) throws IllegalArgumentException {
+        if (servingSize <= 0) {
+            throw new IllegalArgumentException();
+        }
+        this.servingSize = servingSize;
+
+        this.facts = new HashMap<>();
+
+        for (Nutrients n : facts.keySet()) {
+            this.facts.put(n, new Ratio(facts.get(n), servingSize));
+        }
+    }
 
 
 //    // MODIFIES: this
@@ -26,11 +40,11 @@ public class NutritionFacts {
     // getters
 
     public Map<Nutrients, Ratio> getFacts() {
-        return new HashMap<>(); //stub
+        return new HashMap<>(facts);
     }
 
     public int getServingSize() {
-        return 0; //stub
+        return servingSize;
     }
 
 }

@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 // Represents a list of food recipes
@@ -21,7 +22,8 @@ public class RecipeList {
     // REQUIRES: the recipeName exists in the RecipeList
     // EFFECTS : returns the Recipe with the given recipeName
     public Recipe getRecipe(String recipeName) {
-        return new Recipe("", new NutritionFacts(10, new HashMap<>())); //stub
+        return new Recipe("",
+                new NutritionFacts(10, new HashMap<>()), new ArrayList<>()); //stub
     }
 
 

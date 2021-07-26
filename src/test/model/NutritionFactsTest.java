@@ -6,25 +6,29 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class NutritionFactsTest {
 
     NutritionFacts facts1;
-    Ratio r1, r2;
-    Map<Nutrients, Ratio> map;
+    Integer a1, a2;
+    Map<Nutrients, Integer> map;
+    Map<Nutrients, Ratio> expected;
 
     @BeforeEach
     public void setup() {
 
-        r1 = new Ratio(8, 10);
-        r2 = new Ratio(6, 10);
+        a1 = 8;
+        a2 = 5;
 
         map = new HashMap<>();
 
-        map.put(Nutrients.CARBOHYDRATE, r1);
-        map.put(Nutrients.FIBRE, r2);
+        map.put(Nutrients.CARBOHYDRATE, a1);
+        map.put(Nutrients.FIBRE, a2);
+
+        expected = new HashMap<>();
+        expected.put(Nutrients.CARBOHYDRATE, new Ratio(8, 100));
+        expected.put(Nutrients.FIBRE, new Ratio(5, 100));
     }
 
     @Test
@@ -37,7 +41,7 @@ public class NutritionFactsTest {
         }
 
         assertEquals(100, facts1.getServingSize());
-        assertEquals(map, facts1.getFacts());
+        assertTrue(RecipeTest.equalMap(expected, facts1.getFacts()));
     }
 
     @Test

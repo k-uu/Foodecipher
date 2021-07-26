@@ -1,12 +1,9 @@
-package model.equations;
-
-import model.Ratio;
+package model;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-// Represents a square augmented matrix of a defined size that can contain Ratio as elements
+// Represents a square matrix of a defined size that can contain double as elements
 public class Matrix {
 
     private Ratio[][] matrix;
@@ -22,9 +19,9 @@ public class Matrix {
             rows = 1;
             columns = 1;
         } else {
-            matrix = new Ratio[n][n + 1];
+            matrix = new Ratio[n][n];
             rows = n;
-            columns = n + 1;
+            columns = n;
         }
     }
 
@@ -33,13 +30,13 @@ public class Matrix {
     // MODIFIES: this
     // EFFECTS: set each element of the list, starting with the first, to elements in the array from the top
     // to bottom.
-    public void setColumn(List<Ratio> list, int index) {
-
-        List<Ratio> copy = new ArrayList<>(list);
-        for (int i = 0; i < rows; i++) {
-            matrix[i][index] = copy.get(i);
-        }
-    }
+//    public void setColumn(List<Ratio> list, int index) {
+//
+//        List<Ratio> copy = new ArrayList<>(list);
+//        for (int i = 0; i < rows; i++) {
+//            matrix[i][index] = copy.get(i);
+//        }
+//    }
 
     // REQUIRES: index is < number of rows, index >= 0 and that list contains the
     // same number of elements as the number of columns
@@ -55,18 +52,18 @@ public class Matrix {
     }
 
 
-    // REQUIRES: index is < number of columns and index >= 0
-    // EFFECTS: returns a list containing elements in a column ordered top to bottom.
-    public List<Ratio> getColumn(int index) {
-
-        List<Ratio> result = new ArrayList<>(rows);
-
-        for (int i = 0; i < rows; i++) {
-            Ratio r = matrix[i][index];
-            result.add(new Ratio(r.getNumerator(), r.getDenominator()));
-        }
-        return result;
-    }
+//    // REQUIRES: index is < number of columns and index >= 0
+//    // EFFECTS: returns a list containing elements in a column ordered top to bottom.
+//    public List<Ratio> getColumn(int index) {
+//
+//        List<Ratio> result = new ArrayList<>(rows);
+//
+//        for (int i = 0; i < rows; i++) {
+//            Ratio r = matrix[i][index];
+//            result.add(new Ratio(r.getNumerator(), r.getDenominator()));
+//        }
+//        return result;
+//    }
 
     // REQUIRES: index is < number of rows and index >= 0
     // EFFECTS: returns a list containing elements in a row ordered left to right.
@@ -83,16 +80,16 @@ public class Matrix {
 
     // REQUIRES: this does not contain empty elements
     // EFFECTS: returns a copy of the matrix
-    public Matrix copy() {
-
-        Matrix copy = new Matrix(rows);
-
-        for (int colm = 0; colm < columns; colm++) {
-            List<Ratio> r = new ArrayList<>(this.getColumn(colm));
-            copy.setColumn(r, colm);
-        }
-        return copy;
-    }
+//    public Matrix copy() {
+//
+//        Matrix copy = new Matrix(rows);
+//
+//        for (int colm = 0; colm < columns; colm++) {
+//            List<Ratio> r = new ArrayList<>(this.getColumn(colm));
+//            copy.setColumn(r, colm);
+//        }
+//        return copy;
+//    }
 
     // getters
     public int getRowCount() {
@@ -101,5 +98,17 @@ public class Matrix {
 
     public int getColumnCount() {
         return columns;
+    }
+
+    public double[][] getMatrix() {
+
+        double[][] m = new double[rows][columns];
+
+        for (int row = 0; row < rows; row++) {
+            for (int colm = 0; colm < columns; colm++) {
+                m[row][colm] = matrix[row][colm].getValue();
+            }
+        }
+        return m;
     }
 }

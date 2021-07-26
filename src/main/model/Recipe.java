@@ -1,48 +1,87 @@
 package model;
 
+import org.apache.commons.math3.linear.*;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 // Represents a food recipe consisting of ingredients and their respective quantities
-// INVARIANT: there is n core nutrients and n + 1 ingredients
 public class Recipe {
 
-    // EFFECTS: create a named recipe with Nutrition Facts with an empty ingredient and proportion list
-    public Recipe(String recipeName, NutritionFacts nutritionFacts) { }
+    private String name;
+    private NutritionFacts facts;
+    private List<Ingredient> ingredients;
+    private List<Double> proportions;
 
-    // EFFECTS: create a named recipe with Nutrition Facts and a list of ingredient(s) and proportion(s)
-    public Recipe(String recipeName, NutritionFacts nutritionFacts, List<Ingredient> ingredients) { }
+    // REQUIRES: ingredients and nutritionFacts have n core nutrients and there are n + 1 elements in ingredients
+    // EFFECTS: create a named recipe with Nutrition Facts and a list of ingredients with respective proportions
+    public Recipe(String recipeName, NutritionFacts nutritionFacts, List<Ingredient> ingredients) {
+
+        this.name = recipeName;
+        this.facts = nutritionFacts;
+        this.ingredients = new ArrayList<Ingredient>(ingredients);
+        this.proportions = new ArrayList<>();
+    }
+
+//    // MODIFIES: this
+//    // EFFECTS: adds a unique ingredient to the recipe and returns true. If List of ingredients
+//    public boolean addIngredient(Ingredient ingredient) {}
+//
+//    // MODIFIES: this
+//    // EFFECTS: removes an existing ingredient from the recipe and returns true, else returns false
+//    public boolean removeIngredient(Ingredient ingredient) {
+//        return false; //stub
+//    }
+
+    // EFFECTS: 
 
     // MODIFIES: this
-    // EFFECTS: adds a unique ingredient to the recipe
-    public void addIngredient(Ingredient ingredient) {}
+    // EFFECTS: approximates the proportion of each ingredient in the recipe based on their individual
+    // nutrient / mass ratios. If the approximation finds a unique solution update this and return true,
+    // else return false. If a Nutrient is not in givenOrder, throw IllegalArgumentException
+    public boolean findProportions(List<Nutrients> givenOrder) throws IllegalArgumentException {
 
+        Matrix m = new Matrix(ingredients.size());
+        List<Ratio> row = new ArrayList<>();
+        double[] c = new double[givenOrder.size()];
+        Map<Nutrients, Ratio> nf = facts.getFacts();
+        List<Ratio> botRow = new ArrayList<>();
+        int count = 0;
 
-    // MODIFIES: this
-    // EFFECTS: removes an existing ingredient from the recipe and returns true, else returns false
-    public boolean removeIngredient(Ingredient ingredient) {
-        return false; //stub
+        for (Nutrients n : givenOrder) {
+            row.clear();
+            for (int i = 0; i < ingredients.size(); i++) {
+                if (!ingredients.get(i).getNutrients().containsKey(n)) {
+                    throw new IllegalArgumentException("Nutrient from givenOrder is not in ingredients");
+                }
+                row.add(ingredients.get(i).getNutrients().get(n));
+            }
+            row.add(facts.getFacts().get(n));
+            m.setRow(row, count);
+            c[count] = nf.get(n).getValue();
+            count++;
+            botRow.add(new Ratio(1,1));
+        }
+        m.setRow(botRow, m.getRowCount() - 1);
+
+        RealMatrix coefficients = new Array2DRowRealMatrix(m.getMatrix());
+
+        DecompositionSolver solver = new LUDecomposition(coefficients).getSolver();
+
+        RealVector constants = new ArrayRealVector(c);
+
+        if (!solver.isNonSingular()) {
+            return false;
+        }
+        RealVector solution = solver.solve(constants);
+        for (int i = 0; i < m.getColumnCount(); i++) {
+            proportions.add((Double) solution.getEntry(i));
+        }
+        return true;
     }
-
-    // MODIFIES: this
-    // approximates the proportion of each ingredient in the recipe based on their individual nutrient / mass ratios
-    // if the approximation finds a solution (consistent system) return true, else return false and do not mutate this
-    public boolean findProportions() {
-        return false; //stub
-    }
-
-    // EFFECTS: returns a list containing the decimal values of nutrient / mass ratios ordered with the first element
-    // having the same Nutrient as the first in givenOrder
-    private List<Double> toList(Ingredient ingredient, List<Nutrients> givenOrder) {
-        return new ArrayList<>();
-    }
-
-    // EFFECTS: returns a list containing the decimal values of NutritionFacts ordered with the first element
-    // having the same Nutrient as the first in givenOrder
-    private List<Double> toList(NutritionFacts facts, List<Nutrients> givenOrder) {
-        return new ArrayList<>();
-    }
-
 
     // EFFECTS: returns a String for the recipe with the given format:
     // * recipeName *
@@ -52,4 +91,22 @@ public class Recipe {
     public String toString() {
         return ""; //stub
     }
+
+    // getters
+    public String getName() {
+        return name;
+    }
+
+    public List<Double> getProportions() {
+        return proportions;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return new ArrayList<>(ingredients);
+    }
+
+    public NutritionFacts getNutritionFacts() {
+        return this.facts;
+    }
+
 }

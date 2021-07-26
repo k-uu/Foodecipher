@@ -86,6 +86,6 @@ public class IngredientTest {
         assertFalse(i1.changeNutrientRatio(Nutrients.CARBOHYDRATE, r2));
 
         assertEquals(1, i1.getNutrients().size());
-        assertEquals(r1, i1.getNutrients().get(Nutrients.CARBOHYDRATE));
+        assertEquals(r1, i1.getNutrients().get(Nutrients.PROTEIN));
     }
 }

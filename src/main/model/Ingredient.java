@@ -6,35 +6,47 @@ import java.util.Map;
 // Represents a food item with its associated nutrition
 public class Ingredient {
 
-    // EFFECTS: an ingredient with given name and empty nutrient / mass ratio list;
-    public Ingredient(String name) { }
+    private String name;
+    private Map<Nutrients, Ratio> nutrients;
 
-    // REQUIRES: nutrient type added does not already exist
+    // EFFECTS: an ingredient with given name and empty nutrient / mass ratio list.
+    public Ingredient(String name) {
+
+        this.name = name;
+        nutrients = new HashMap<>();
+    }
+
     // MODIFIES: this
     // EFFECTS: adds a nutrient / mass ratio to this
-    public void addNutrientRatio(Nutrients nutrient, Ratio ratio) { }
+    public void addNutrientRatio(Nutrients nutrient, Ratio ratio) {
+
+        nutrients.put(nutrient, ratio);
+    }
 
     // MODIFIES: this
     // EFFECTS: removes an existing nutrient / mass ratio from this and returns true, else returns false
     public boolean removeNutrientRatio(Nutrients nutrient) {
-        return false; //stub
+
+        if (nutrients.containsKey(nutrient)) {
+            nutrients.remove(nutrient);
+            return true;
+        }
+        return false;
     }
 
     // MODIFIES: this
     // EFFECTS: change the ratio of an existing nutrient and return true, else return false
     public boolean changeNutrientRatio(Nutrients nutrient, Ratio ratio) {
-        return false; //stub
+
+        return nutrients.replace(nutrient, nutrients.get(nutrient), ratio);
     }
 
     // getters
     public Map<Nutrients, Ratio> getNutrients() {
-        return new HashMap<>();
+        return new HashMap<>(nutrients);
     }
 
     public String getName() {
-        return ""; //stub
+        return name;
     }
-
-
-
 }
