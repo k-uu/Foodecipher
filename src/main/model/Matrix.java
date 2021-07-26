@@ -25,19 +25,6 @@ public class Matrix {
         }
     }
 
-    // REQUIRES: index is < number of columns, index >= 0 and that list contains the
-    // same number of elements as the number of rows
-    // MODIFIES: this
-    // EFFECTS: set each element of the list, starting with the first, to elements in the array from the top
-    // to bottom.
-//    public void setColumn(List<Ratio> list, int index) {
-//
-//        List<Ratio> copy = new ArrayList<>(list);
-//        for (int i = 0; i < rows; i++) {
-//            matrix[i][index] = copy.get(i);
-//        }
-//    }
-
     // REQUIRES: index is < number of rows, index >= 0 and that list contains the
     // same number of elements as the number of columns
     // MODIFIES: this
@@ -51,20 +38,6 @@ public class Matrix {
         }
     }
 
-
-//    // REQUIRES: index is < number of columns and index >= 0
-//    // EFFECTS: returns a list containing elements in a column ordered top to bottom.
-//    public List<Ratio> getColumn(int index) {
-//
-//        List<Ratio> result = new ArrayList<>(rows);
-//
-//        for (int i = 0; i < rows; i++) {
-//            Ratio r = matrix[i][index];
-//            result.add(new Ratio(r.getNumerator(), r.getDenominator()));
-//        }
-//        return result;
-//    }
-
     // REQUIRES: index is < number of rows and index >= 0
     // EFFECTS: returns a list containing elements in a row ordered left to right.
     public List<Ratio> getRow(int index) {
@@ -77,19 +50,6 @@ public class Matrix {
         }
         return result;
     }
-
-    // REQUIRES: this does not contain empty elements
-    // EFFECTS: returns a copy of the matrix
-//    public Matrix copy() {
-//
-//        Matrix copy = new Matrix(rows);
-//
-//        for (int colm = 0; colm < columns; colm++) {
-//            List<Ratio> r = new ArrayList<>(this.getColumn(colm));
-//            copy.setColumn(r, colm);
-//        }
-//        return copy;
-//    }
 
     // getters
     public int getRowCount() {

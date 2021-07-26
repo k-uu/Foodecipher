@@ -22,7 +22,7 @@ As a user, I would like to be able to:
 > - remove an existing recipe
 > - view a list of all recipes created so far
 > - view the ingredient proportions for an existing recipe
-> - change an ingredient  in an existing recipe
+> - change an ingredient in an existing recipe
 > - add a new ingredient and core nutrient/mass ratio to an existing recipe
 > - remove an ingredient from an existing recipe
 

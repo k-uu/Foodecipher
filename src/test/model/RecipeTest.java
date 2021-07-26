@@ -108,12 +108,16 @@ public class RecipeTest {
     public void solveMatrixTestSuccess() {
         double[][] input = {{5, 6, 4}, {2, 3, 5}, {1, 1, 1}};
 
+
         double[] constants = {4, 3, 1};
 
         List<Double> expected = new ArrayList<>();
         expected.add(1.0);
         expected.add(-0.5);
         expected.add(0.5);
+
+
+
 
         recipe = new Recipe("Bread", nfacts, ingredients);
 
@@ -122,8 +126,6 @@ public class RecipeTest {
         for (int i = 0; i < expected.size(); i++) {
             assertEquals(expected.get(i), recipe.getProportions().get(i), 0.01);
         }
-
-
     }
 
     @Test

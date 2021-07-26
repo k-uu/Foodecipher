@@ -55,44 +55,6 @@ public class MatrixTest {
         assertEquals(1, m1.getRowCount());
     }
 
-//    @Test
-//    public void setColumnTestZeroIndex() {
-//
-//        m1 = new Matrix(3);
-//
-//        ratios.add(r1);
-//        ratios.add(r2);
-//        ratios.add(r3);
-//
-//        m1.setColumn(ratios, 0);
-//        assertTrue(equalList(ratios, m1.getColumn(0)));
-//
-//        ratios.set(0, r3);
-//        assertFalse(equalList(ratios, m1.getColumn(0)));
-//
-//        m1.setColumn(ratios, 0);
-//        assertTrue(equalList(ratios, m1.getColumn(0)));
-//    }
-//
-//    @Test
-//    public void setColumnTestMaxIndex() {
-//
-//        m1 = new Matrix(3);
-//
-//        ratios.add(r1);
-//        ratios.add(r2);
-//        ratios.add(r3);
-//
-//        m1.setColumn(ratios, 3);
-//        assertTrue(equalList(ratios, m1.getColumn(3)));
-//
-//        ratios.set(2, r1);
-//        assertFalse(equalList(ratios, m1.getColumn(3)));
-//
-//        m1.setColumn(ratios, 2);
-//        assertTrue(equalList(ratios, m1.getColumn(2)));
-//    }
-
     @Test
     public void setRowTestZeroIndex() {
 
@@ -135,22 +97,6 @@ public class MatrixTest {
 
 
     }
-
-//    @Test
-//    public void getColumnTestZeroIndex() {
-//
-//        setColumnTestZeroIndex();
-//
-//        assertTrue(equalList(ratios, m1.getColumn(0)));
-//    }
-//
-//    @Test
-//    public void getColumnTestMaxIndex() {
-//
-//        setColumnTestMaxIndex();
-//
-//        assertTrue(equalList(ratios, m1.getColumn(2)));
-//    }
 
     @Test
     public void getRowTestZeroIndex() {
@@ -205,26 +151,6 @@ public class MatrixTest {
 
         assertTrue(equalList(expected, m1.getRow(2)));
     }
-
-//    @Test
-//    public void copyTest() {
-//
-//        m1 = new Matrix(3);
-//
-//        ratios.add(r1);
-//        ratios.add(r2);
-//        ratios.add(r3);
-//
-//        m1.setColumn(ratios, 0);
-//        m1.setColumn(ratios, 1);
-//        m1.setColumn(ratios, 2);
-//
-//        Matrix copy = m1.copy();
-//
-//        for (int i = 0; i <= 3; i++) {
-//            assertTrue(equalList(ratios, copy.getColumn(i)));
-//        }
-//    }
 
     @Test
     public void getMatrixTest() {

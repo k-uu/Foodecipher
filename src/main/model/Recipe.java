@@ -85,7 +85,7 @@ public class Recipe {
         }
         RealVector solution = solver.solve(constants);
         for (int i = 0; i < matrix.length; i++) {
-            proportions.add((Double) solution.getEntry(i));
+            proportions.add(solution.getEntry(i));
         }
 
     }

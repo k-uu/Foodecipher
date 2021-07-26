@@ -11,7 +11,6 @@ public class IngredientTest {
 
     Ingredient i1;
     Ratio r1, r2;
-    Map<Nutrients, Ratio> map;
 
     @BeforeEach
     public void setup() {
