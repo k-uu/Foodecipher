@@ -65,13 +65,13 @@ public class MatrixTest {
         ratios.add(r3);
 
         m1.setRow(ratios, 0);
-        assertTrue(equalList(ratios, m1.getRow(0)));
+        assertTrue(ratios.equals(m1.getRow(0)));
 
         ratios.set(0, r2);
-        assertFalse(equalList(ratios, m1.getRow(0)));
+        assertFalse(ratios.equals(m1.getRow(0)));
 
         m1.setRow(ratios, 0);
-        assertTrue(equalList(ratios, m1.getRow(0)));
+        assertTrue(ratios.equals(m1.getRow(0)));
 
 
     }
@@ -86,13 +86,13 @@ public class MatrixTest {
         ratios.add(r3);
 
         m1.setRow(ratios, 2);
-        assertTrue(equalList(ratios, m1.getRow(2)));
+        assertTrue(ratios.equals(m1.getRow(2)));
 
         ratios.set(0, r2);
-        assertFalse(equalList(ratios, m1.getRow(2)));
+        assertFalse(ratios.equals(m1.getRow(2)));
 
         m1.setRow(ratios, 2);
-        assertTrue(equalList(ratios, m1.getRow(2)));
+        assertTrue(ratios.equals(m1.getRow(2)));
 
 
 
@@ -122,7 +122,7 @@ public class MatrixTest {
         m1.setRow(ratios, 1);
         m1.setRow(ratios, 2);
 
-        assertTrue(equalList(expected, m1.getRow(0)));
+        assertTrue(expected.equals(m1.getRow(0)));
     }
 
     @Test
@@ -149,7 +149,7 @@ public class MatrixTest {
         m1.setRow(ratios, 1);
         m1.setRow(dif, 2);
 
-        assertTrue(equalList(expected, m1.getRow(2)));
+        assertTrue(expected.equals(m1.getRow(2)));
     }
 
     @Test
@@ -174,18 +174,5 @@ public class MatrixTest {
                assertEquals(expected[row][colm], actual[row][colm]);
             }
         }
-    }
-
-    private static boolean equalList(List<Ratio> l1, List<Ratio> l2) {
-        if (l1.size() != l2.size()) {
-            return false;
-        }
-        for (int i = 0; i < l1.size(); i++) {
-            if (l1.get(i).getNumerator() != l2.get(i).getNumerator() ||
-                    l1.get(i).getDenominator() != l2.get(i).getDenominator()) {
-                return false;
-            }
-        }
-        return true;
     }
 }

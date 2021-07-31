@@ -26,7 +26,7 @@ As a user, I would like to be able to:
 > - add a new ingredient and core nutrient/mass ratio to an existing recipe
 > - remove an ingredient from an existing recipe
 > - save all existing recipes to a file
-? - load all saved recipes from a file
+> - load all saved recipes from a file
 
 
 TODO: HashMap to EnumMap, 

@@ -1,11 +1,14 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 // Represents a list of food recipes
-public class RecipeList {
+public class RecipeList implements Writable {
 
     private List<Recipe> recipes;
 
@@ -61,5 +64,11 @@ public class RecipeList {
     public List<Recipe> getRecipes() {
 
         return new ArrayList<>(recipes);
+    }
+
+    // EFFECTS: returns recipes as a JSON array
+    @Override
+    public JSONObject toJson() {
+        return null;
     }
 }

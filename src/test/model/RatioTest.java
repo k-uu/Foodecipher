@@ -1,9 +1,9 @@
 package model;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RatioTest {
 
@@ -13,8 +13,6 @@ public class RatioTest {
     public void testRatioSucceed() {
 
         try {
-            r1 = new Ratio(8, 10);
-            r2 = new Ratio(4, 3);
             r3 = new Ratio(-1, 4);
             r4 = new Ratio(0 ,1);
         } catch (IllegalArgumentException e) {
@@ -135,6 +133,35 @@ public class RatioTest {
 
         r1 = new Ratio(8, 10);
         assertEquals(0.8, r1.getValue(), 0.05);
+    }
+
+    @Test
+    public void equalsTestTrue() {
+
+        Ratio r5 = new Ratio(8, 6);
+        r2 = new Ratio(4, 3);
+
+        assertTrue(r2.equals(r5));
+        assertTrue(r2.equals(r2));
+
+    }
+
+    @Test
+    public void equalsTestFalse() {
+
+        r1 = new Ratio(8, 10);
+        r2 = new Ratio(4, 3);
+
+        assertFalse(r1.equals(r2));
+    }
+
+    @Test
+    public void hashCodeTest() {
+
+        Ratio r5 = new Ratio(8, 6);
+        r2 = new Ratio(4, 3);
+
+        assertTrue(r5.hashCode() == r2.hashCode());
     }
 
     private void checkInputs() {

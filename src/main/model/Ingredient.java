@@ -1,10 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.HashMap;
 import java.util.Map;
 
 // Represents a food item with its associated nutrition
-public class Ingredient {
+public class Ingredient implements Writable {
 
     private String name;
     private Map<Nutrients, Ratio> nutrients;
@@ -48,5 +51,11 @@ public class Ingredient {
 
     public String getName() {
         return name;
+    }
+
+    // EFFECTS: returns ingredient as a JSON object
+    @Override
+    public JSONObject toJson() {
+        return null;
     }
 }

@@ -3,6 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,7 +15,6 @@ public class RecipeTest {
     private List<Ingredient> ingredients;
     private NutritionFacts nfacts;
     private List<Nutrients> order;
-    private int[] nums;
 
     public static boolean equalIngredientList(List<Ingredient> l1, List<Ingredient> l2) {
 
@@ -25,31 +25,8 @@ public class RecipeTest {
             Map<Nutrients, Ratio> i1 = l1.get(i).getNutrients();
             Map<Nutrients, Ratio> i2 = l2.get(i).getNutrients();
 
-            if (!equalMap(i1, i2)) {
+            if (!i1.equals(i2)) {
                 return false;
-            }
-        }
-        return true;
-    }
-
-    public static boolean equalMap(Map<Nutrients, Ratio> m1, Map<Nutrients, Ratio> m2) {
-
-        if (m1.size() != m2.size()) {
-            return false;
-        }
-
-        Set<Nutrients> nutrients = m1.keySet();
-
-        for (int i = 0; i < m1.size(); i++) {
-            for (Nutrients n : nutrients) {
-                if (m2.containsKey(n)) {
-                    if (m2.get(n).getNumerator() != m1.get(n).getNumerator() ||
-                            m2.get(n).getDenominator() != m1.get(n).getDenominator()) {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
             }
         }
         return true;
@@ -57,7 +34,7 @@ public class RecipeTest {
 
     @BeforeEach
     public void setup() {
-        nums = new int[]{0, 2, 2, 3, 4, 5, 4, 3};
+        int[] nums = new int[]{0, 2, 2, 3, 4, 5, 4, 3};
 
         i1 = new Ingredient("col0");
         i1.addNutrientRatio(Nutrients.CARBOHYDRATE, new Ratio(nums[0], 1));
@@ -99,7 +76,7 @@ public class RecipeTest {
 
         assertTrue(equalIngredientList(ingredients, recipe.getIngredients()));
 
-        assertTrue(equalMap(nfacts.getFacts(), recipe.getNutritionFacts().getFacts()));
+        assertTrue(nfacts.getFacts().equals(recipe.getNutritionFacts().getFacts()));
 
         assertEquals(0, recipe.getProportions().size());
     }
@@ -235,11 +212,12 @@ public class RecipeTest {
 
         recipe.findProportions(order);
         List<Double> prop = recipe.getProportions();
+        DecimalFormat twoDecimals = new DecimalFormat("#.00");
 
         String expected = "* " + recipe.getName() + " *" + System.lineSeparator() +
-                i1.getName() + ", Proportion: " + prop.get(0) + System.lineSeparator() +
-                i2.getName() + ", Proportion: " + prop.get(1) + System.lineSeparator() +
-                i3.getName() + ", Proportion: " + prop.get(2);
+                i1.getName() + ", Proportion: " + twoDecimals.format(prop.get(0)) + System.lineSeparator() +
+                i2.getName() + ", Proportion: " + twoDecimals.format(prop.get(1)) + System.lineSeparator() +
+                i3.getName() + ", Proportion: " + twoDecimals.format(prop.get(2));
 
         assertEquals(expected, recipe.toString());
 

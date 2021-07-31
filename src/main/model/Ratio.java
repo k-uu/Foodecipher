@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 // Represents an immutable non-imaginary ratio / rational number and some operations that can be applied on it
 public class Ratio {
 
@@ -72,6 +74,27 @@ public class Ratio {
         }
     }
 
+    // EFFECTS: returns true if another ratio instance has the same value as this
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (this.getClass() != o.getClass()) {
+            return false;
+        }
+        Ratio r = (Ratio)o;
+        return this.getNumerator() * r.getDenominator() == this.getDenominator() * r.getNumerator();
+    }
+
+    @Override
+    public int hashCode() {
+
+        long val = Double.doubleToLongBits(this.getValue());
+        int result = (int)(val ^ (val >>> 32));
+        return result;
+    }
+
     //getters:
 
     public int getNumerator() {
@@ -87,4 +110,5 @@ public class Ratio {
     public double getValue() {
         return ((double) this.numerator) / this.denominator;
     }
+
 }

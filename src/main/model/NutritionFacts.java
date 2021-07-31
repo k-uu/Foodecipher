@@ -1,11 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 // Represents a Nutrition Facts label with a serving size and core nutrient amounts
-public class NutritionFacts {
+public class NutritionFacts implements Writable {
 
     private int servingSize;
     private Map<Nutrients, Ratio> facts;
@@ -47,4 +49,9 @@ public class NutritionFacts {
         return servingSize;
     }
 
+    // EFFECTS: returns nutrition facts as a JSON object
+    @Override
+    public JSONObject toJson() {
+        return null;
+    }
 }

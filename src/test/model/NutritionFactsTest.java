@@ -41,7 +41,7 @@ public class NutritionFactsTest {
         }
 
         assertEquals(100, facts1.getServingSize());
-        assertTrue(RecipeTest.equalMap(expected, facts1.getFacts()));
+        assertTrue(expected.equals(facts1.getFacts()));
     }
 
     @Test

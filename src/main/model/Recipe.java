@@ -1,7 +1,10 @@
 package model;
 
 import org.apache.commons.math3.linear.*;
+import org.json.JSONObject;
+import persistence.Writable;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.Map;
 
 
 // Represents a food recipe consisting of ingredients and their respective quantities
-public class Recipe {
+public class Recipe implements Writable {
 
     private String name;
     private NutritionFacts facts;
@@ -92,14 +95,17 @@ public class Recipe {
 
     // EFFECTS: returns a String for the recipe with the given format:
     // * recipeName *
-    // ingredientName, Proportion: proportion
+    // ingredientName, Proportion: proportion to two decimal places
     // ...
     @Override
     public String toString() {
         String result = "* " + name + " *";
+        DecimalFormat twoDecimals = new DecimalFormat("#.00");
         int count = 0;
+
         for (Ingredient i : ingredients) {
-            result = result.concat(System.lineSeparator() + i.getName() + ", Proportion: " + proportions.get(count));
+            result = result.concat(System.lineSeparator() + i.getName() + ", Proportion: "
+                    + twoDecimals.format(proportions.get(count)));
             count++;
         }
         return result;
@@ -122,4 +128,9 @@ public class Recipe {
         return this.facts;
     }
 
+    // EFFECTS: returns recipe as a JSON object
+    @Override
+    public JSONObject toJson() {
+        return null;
+    }
 }
