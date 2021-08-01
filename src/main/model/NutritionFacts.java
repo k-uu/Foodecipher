@@ -3,7 +3,7 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 // Represents a Nutrition Facts label with a serving size and core nutrient amounts
@@ -20,7 +20,7 @@ public class NutritionFacts implements Writable {
         }
         this.servingSize = servingSize;
 
-        this.facts = new HashMap<>();
+        this.facts = new EnumMap<>(Nutrients.class);
 
         for (Nutrients n : facts.keySet()) {
             this.facts.put(n, new Ratio(facts.get(n), servingSize));
@@ -42,7 +42,7 @@ public class NutritionFacts implements Writable {
     // getters
 
     public Map<Nutrients, Ratio> getFacts() {
-        return new HashMap<>(facts);
+        return new EnumMap<>(facts);
     }
 
     public int getServingSize() {

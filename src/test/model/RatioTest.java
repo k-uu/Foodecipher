@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -162,6 +163,16 @@ public class RatioTest {
         r2 = new Ratio(4, 3);
 
         assertTrue(r5.hashCode() == r2.hashCode());
+    }
+
+    @Test
+    public void toJsonTest() {
+        r1 = new Ratio(8, 10);
+
+        JSONObject result = r1.toJson();
+
+        assertEquals(r1.getNumerator(), result.get("numerator"));
+        assertEquals(r1.getDenominator(), result.get("denominator"));
     }
 
     private void checkInputs() {

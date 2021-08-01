@@ -16,7 +16,7 @@ public class NutritionFactsTest {
     Map<Nutrients, Ratio> expected;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
 
         a1 = 8;
         a2 = 5;
@@ -27,12 +27,12 @@ public class NutritionFactsTest {
         map.put(Nutrients.FIBRE, a2);
 
         expected = new HashMap<>();
-        expected.put(Nutrients.CARBOHYDRATE, new Ratio(8, 100));
-        expected.put(Nutrients.FIBRE, new Ratio(5, 100));
+        expected.put(Nutrients.CARBOHYDRATE, new Ratio(a1, 100));
+        expected.put(Nutrients.FIBRE, new Ratio(a2, 100));
     }
 
     @Test
-    public void testNutritionFactsSucceed() {
+    void testNutritionFactsSucceed() {
 
         try {
             facts1 = new NutritionFacts(100, map);
@@ -45,7 +45,7 @@ public class NutritionFactsTest {
     }
 
     @Test
-    public void testNutritionFactsFailZero() {
+    void testNutritionFactsFailZero() {
 
         try {
             facts1 = new NutritionFacts(0, map);
@@ -56,7 +56,7 @@ public class NutritionFactsTest {
     }
 
     @Test
-    public void testNutritionFactsFailNeg() {
+    void testNutritionFactsFailNeg() {
 
         try {
             facts1 = new NutritionFacts(-10, map);
@@ -65,4 +65,10 @@ public class NutritionFactsTest {
 
         }
     }
+
+    @Test
+    void toJsonTest() {
+
+    }
+
 }

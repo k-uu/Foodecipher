@@ -3,7 +3,7 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 // Represents a food item with its associated nutrition
@@ -16,7 +16,7 @@ public class Ingredient implements Writable {
     public Ingredient(String name) {
 
         this.name = name;
-        nutrients = new HashMap<>();
+        nutrients = new EnumMap<>(Nutrients.class);
     }
 
     // MODIFIES: this
@@ -46,7 +46,7 @@ public class Ingredient implements Writable {
 
     // getters
     public Map<Nutrients, Ratio> getNutrients() {
-        return new HashMap<>(nutrients);
+        return new EnumMap<>(nutrients);
     }
 
     public String getName() {

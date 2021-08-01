@@ -3,7 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,6 +11,7 @@ public class IngredientTest {
 
     Ingredient i1;
     Ratio r1, r2;
+    List<Nutrients> order;
 
     @BeforeEach
     public void setup() {
@@ -18,6 +19,7 @@ public class IngredientTest {
         i1 = new Ingredient("Milk");
         r1 = new Ratio(2, 10);
         r2 = new Ratio(3, 8);
+        order = new ArrayList<>();
     }
 
     @Test
@@ -25,6 +27,7 @@ public class IngredientTest {
 
         assertEquals("Milk", i1.getName());
         assertEquals(0, i1.getNutrients().size());
+
     }
 
     @Test
@@ -33,9 +36,17 @@ public class IngredientTest {
         i1.addNutrientRatio(Nutrients.CARBOHYDRATE, r1);
         i1.addNutrientRatio(Nutrients.SATURATED_FAT, r2);
 
+        order.add(Nutrients.SATURATED_FAT);
+        order.add(Nutrients.CARBOHYDRATE);
+
         assertEquals(2, i1.getNutrients().size());
         assertEquals(r1, i1.getNutrients().get(Nutrients.CARBOHYDRATE));
         assertEquals(r2, i1.getNutrients().get(Nutrients.SATURATED_FAT));
+
+        Collection keys = i1.getNutrients().keySet();
+
+        // confirm order of EnumMap
+        assertEquals(order, new ArrayList<>(keys));
     }
 
     @Test
@@ -60,7 +71,14 @@ public class IngredientTest {
         i1.addNutrientRatio(Nutrients.CARBOHYDRATE, r1);
         i1.addNutrientRatio(Nutrients.SATURATED_FAT, r2);
 
+        order.add(Nutrients.SATURATED_FAT);
+        order.add(Nutrients.CARBOHYDRATE);
+
         assertFalse(i1.removeNutrientRatio(Nutrients.PROTEIN));
+
+        Collection keys = i1.getNutrients().keySet();
+        assertEquals(order, new ArrayList<>(keys));
+
         assertEquals(2, i1.getNutrients().size());
         assertTrue(i1.getNutrients().containsKey(Nutrients.CARBOHYDRATE));
         assertTrue(i1.getNutrients().containsKey(Nutrients.SATURATED_FAT));

@@ -11,7 +11,7 @@ public class FoodecipherApp {
     private RecipeList recipes;
     private Scanner sc;
 
-    // EFFECTS: intializes and runs FoodecipherApp
+    // EFFECTS: initializes and runs FoodecipherApp
     public FoodecipherApp() {
         recipes = new RecipeList();
         sc = new Scanner(System.in);
@@ -101,27 +101,20 @@ public class FoodecipherApp {
     // EFFECTS: returns a list of nutrients given by user:
     private List<Nutrients> getNutrients() {
 
-        displayNutrients();
-        boolean isRunning = true;
         List<Nutrients> nutrients = new ArrayList<>();
-        System.out.println("Select your Core Nutrients for this recipe. Enter 'f' to move on");
+        System.out.println("Select your Core Nutrients for this recipe. Enter 'y' to select or any other character"
+                + " to continue");
 
-        while (isRunning) {
-            String input = sc.nextLine();
-            for (Nutrients n : Nutrients.values()) {
-                if (n.getValue().equals(input)) {
-                    if (nutrients.contains(n)) {
-                        System.out.println("Please provide a Core Nutrient only once");
-                        return getNutrients();
-                    }
-                    nutrients.add(n);
-                }
-            }
-            if (input.equals("f")) {
-                isRunning = false;
+        String input;
+        for (Nutrients n : Nutrients.values()) {
+            System.out.print("Add " + n.getValue() + " ? ");
+            input = sc.nextLine();
+            if (input.equals("y")) {
+                nutrients.add(n);
             }
         }
         if (nutrients.size() == 0) {
+            System.out.println("Please select at least one Core Nutrient");
             return getNutrients();
         }
         return nutrients;
@@ -140,12 +133,7 @@ public class FoodecipherApp {
             sc.nextLine();
         }
 
-        for (int i = 0; i < nutrients.size(); i++) {
-            Nutrients n = getNutrient(nutrients);
-            while (map.containsKey(n)) {
-                System.out.println("WARNING: You have already added this Nutrient");
-                n = getNutrient(nutrients);
-            }
+        for (Nutrients n : nutrients) {
             System.out.print("How much " + n.getValue() + " is in the serving size? : ");
             Integer amount = sc.nextInt();
             sc.nextLine();
@@ -233,15 +221,6 @@ public class FoodecipherApp {
         return getNutrient(nutrients);
     }
 
-    // displays list of valid nutrients
-    private void displayNutrients() {
-
-        System.out.println("Valid Core Nutrient types: ");
-        for (Nutrients n: Nutrients.values()) {
-            System.out.println("- " + n.getValue());
-        }
-    }
-
     // EFFECTS: view a list of recipe names
     private void viewRecipes() {
 
@@ -295,7 +274,7 @@ public class FoodecipherApp {
                 + "(m) - Make a new recipe" + System.lineSeparator()
                 + "(v) - View an existing recipe" + System.lineSeparator()
                 + "(r) - remove an existing recipe" + System.lineSeparator()
-                +  "(h) - help" + System.lineSeparator()
+                + "(h) - help" + System.lineSeparator()
                 + "(q) - quit";
         System.out.println(menu);
     }

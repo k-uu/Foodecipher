@@ -25,7 +25,7 @@ public class Recipe implements Writable {
 
         this.name = recipeName;
         this.facts = nutritionFacts;
-        this.ingredients = new ArrayList<Ingredient>(ingredients);
+        this.ingredients = new ArrayList<>(ingredients);
         this.proportions = new ArrayList<>();
     }
 

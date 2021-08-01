@@ -4,7 +4,6 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 // Represents a list of food recipes
