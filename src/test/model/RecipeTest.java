@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RecipeTest {
 
-    private Recipe recipe;
+    Recipe recipe;
     private Ingredient i1, i2, i3;
     private List<Ingredient> ingredients;
     private NutritionFacts nfacts;
-    private List<Nutrients> order;
+
+    private int[] nums;
+
 
     public static boolean equalIngredientList(List<Ingredient> l1, List<Ingredient> l2) {
 
@@ -33,8 +37,8 @@ public class RecipeTest {
     }
 
     @BeforeEach
-    public void setup() {
-        int[] nums = new int[]{0, 2, 2, 3, 4, 5, 4, 3};
+    void setup() {
+        nums = new int[]{0, 2, 2, 3, 4, 5, 4, 3};
 
         i1 = new Ingredient("col0");
         i1.addNutrientRatio(Nutrients.CARBOHYDRATE, new Ratio(nums[0], 1));
@@ -56,15 +60,10 @@ public class RecipeTest {
 
         ingredients = new ArrayList<>();
 
-        order = new ArrayList<>();
-        order.add(Nutrients.CARBOHYDRATE);
-        order.add(Nutrients.FIBRE);
-
-
     }
 
     @Test
-    public void testRecipe() {
+    void testRecipe() {
 
         ingredients.add(i1);
         ingredients.add(i2);
@@ -78,11 +77,11 @@ public class RecipeTest {
 
         assertTrue(nfacts.getFacts().equals(recipe.getNutritionFacts().getFacts()));
 
-        assertEquals(0, recipe.getProportions().size());
+        assertEquals(3, recipe.getProportions().size());
     }
 
     @Test
-    public void solveMatrixTestSuccess() {
+    void solveMatrixTestSuccess() {
         double[][] input = {{5, 6, 4}, {2, 3, 5}, {1, 1, 1}};
 
 
@@ -106,7 +105,7 @@ public class RecipeTest {
     }
 
     @Test
-    public void solveMatrixTestFail() {
+    void solveMatrixTestFail() {
         double[][] input = {{4, 4, 4}, {2, 3, 5}, {1, 1, 1}};
 
         double[] constants = {4, 3, 1};
@@ -119,7 +118,7 @@ public class RecipeTest {
     }
 
     @Test
-    public void findProportionsTestTrue() {
+    void findProportionsTestTrue() {
 
         ingredients.add(i1);
         ingredients.add(i2);
@@ -128,7 +127,7 @@ public class RecipeTest {
         recipe = new Recipe("Bread", nfacts, ingredients);
 
         try {
-            recipe.findProportions(order);
+            recipe.findProportions();
 
         } catch (IllegalArgumentException e) {
             fail("correct arguments");
@@ -142,7 +141,7 @@ public class RecipeTest {
     }
 
     @Test
-    public void findProportionsTestFalse() {
+    void findProportionsTestFalse() {
 
         i1.changeNutrientRatio(Nutrients.CARBOHYDRATE, new Ratio(4, 1));
         i2.changeNutrientRatio(Nutrients.CARBOHYDRATE, new Ratio(4, 1));
@@ -154,7 +153,7 @@ public class RecipeTest {
         recipe = new Recipe("Bread", nfacts, ingredients);
 
         try {
-            recipe.findProportions(order);
+            recipe.findProportions();
             assertEquals(0, recipe.getProportions().size());
         } catch (IllegalArgumentException e) {
             fail("order was correct");
@@ -163,9 +162,7 @@ public class RecipeTest {
     }
 
     @Test
-    public void findProportionsTestException() {
-
-        order.set(0, Nutrients.POTASSIUM);
+    void toStringTest() {
 
         ingredients.add(i1);
         ingredients.add(i2);
@@ -173,44 +170,7 @@ public class RecipeTest {
 
         recipe = new Recipe("Bread", nfacts, ingredients);
 
-        try {
-            recipe.findProportions(order);
-            fail("POTASSIUM is not listed in ingredients");
-        } catch (IllegalArgumentException e) {
-            // success
-        }
-    }
-
-    @Test
-    public void findProportionsTestExceptionFail() {
-
-        i1.changeNutrientRatio(Nutrients.CARBOHYDRATE, new Ratio(4, 1));
-        i2.changeNutrientRatio(Nutrients.CARBOHYDRATE, new Ratio(4, 1));
-        ingredients.add(i1);
-        ingredients.add(i2);
-        ingredients.add(i3);
-        order.set(0, Nutrients.POTASSIUM);
-
-        recipe = new Recipe("Bread", nfacts, ingredients);
-
-        try {
-            recipe.findProportions(order);
-            fail("POTASSIUM is not listed in ingredients");
-        } catch (IllegalArgumentException e) {
-            // success
-        }
-    }
-
-    @Test
-    public void toStringTest() {
-
-        ingredients.add(i1);
-        ingredients.add(i2);
-        ingredients.add(i3);
-
-        recipe = new Recipe("Bread", nfacts, ingredients);
-
-        recipe.findProportions(order);
+        recipe.findProportions();
         List<Double> prop = recipe.getProportions();
         DecimalFormat twoDecimals = new DecimalFormat("#.00");
 
@@ -223,5 +183,45 @@ public class RecipeTest {
 
     }
 
+    @Test
+    void toJsonTest() {
 
+        ingredients.add(i1);
+        ingredients.add(i2);
+        ingredients.add(i3);
+
+        recipe = new Recipe("Bread", nfacts, ingredients);
+        List<Double> expected = recipe.getProportions();
+
+        JSONObject jsonRecipe = recipe.toJson();
+        assertEquals("Bread", jsonRecipe.get("name"));
+
+        JSONObject nutrition = jsonRecipe.getJSONObject("nutrition");
+
+        assertEquals(1, nutrition.get("servingSize"));
+
+        JSONObject facts = nutrition.getJSONObject("facts");
+        assertEquals(nums[6], facts.getJSONObject("CARBOHYDRATE").get("numerator"));
+        assertEquals(1, facts.getJSONObject("CARBOHYDRATE").get("denominator"));
+
+        assertEquals(nums[7], facts.getJSONObject("FIBRE").get("numerator"));
+        assertEquals(1, facts.getJSONObject("FIBRE").get("denominator"));
+
+        JSONArray ingredients = jsonRecipe.getJSONArray("ingredients");
+        JSONArray proportions = jsonRecipe.getJSONArray("proportions");
+
+        String[] names = {"col0", "col1", "col2"};
+        int n2 = 0;
+
+        for (int n = 0; n < ingredients.length(); n++) {
+            JSONObject i = ingredients.getJSONObject(n);
+            assertEquals(expected.get(n), proportions.get(n));
+            JSONObject nutrients  = i.getJSONObject("nutrients");
+            assertEquals(names[n], i.get("name"));
+            assertEquals(nums[n2++], nutrients.getJSONObject("CARBOHYDRATE").get("numerator"));
+            assertEquals(1, nutrients.getJSONObject("CARBOHYDRATE").get("denominator"));
+            assertEquals(nums[n2++], nutrients.getJSONObject("FIBRE").get("numerator"));
+            assertEquals(1, nutrients.getJSONObject("FIBRE").get("denominator"));
+        }
+    }
 }

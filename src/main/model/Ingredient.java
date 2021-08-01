@@ -56,6 +56,17 @@ public class Ingredient implements Writable {
     // EFFECTS: returns ingredient as a JSON object
     @Override
     public JSONObject toJson() {
-        return null;
+
+        JSONObject result = new JSONObject();
+        JSONObject ratios = new JSONObject();
+
+        result.put("name", name);
+
+        for (Map.Entry<Nutrients, Ratio> n : nutrients.entrySet()) {
+            ratios.put(n.getKey().name(), n.getValue().toJson());
+        }
+        result.put("nutrients", ratios);
+
+        return result;
     }
 }

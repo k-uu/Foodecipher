@@ -4,10 +4,10 @@ package model;
 public enum Nutrients {
     TOTAL_FAT("Total Fat"),
     SATURATED_FAT("Saturated Fat"),
-    CARBOHYDRATE("Carbohydrate"),
     POTASSIUM("Potassium"),
-    FIBRE("Fibre"),
+    CARBOHYDRATE("Carbohydrate"),
     SUGARS("Sugars"),
+    FIBRE("Fibre"),
     PROTEIN("Protein");
 
     private final String name;

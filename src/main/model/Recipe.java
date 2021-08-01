@@ -1,12 +1,12 @@
 package model;
 
 import org.apache.commons.math3.linear.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,10 +14,11 @@ import java.util.Map;
 // Represents a food recipe consisting of ingredients and their respective quantities
 public class Recipe implements Writable {
 
-    private String name;
     private NutritionFacts facts;
     private List<Ingredient> ingredients;
+
     private List<Double> proportions;
+    private String name;
 
     // REQUIRES: ingredients and nutritionFacts have n core nutrients and there are n + 1 elements in ingredients
     // EFFECTS: create a named recipe with Nutrition Facts and a list of ingredients with respective proportions
@@ -27,6 +28,7 @@ public class Recipe implements Writable {
         this.facts = nutritionFacts;
         this.ingredients = new ArrayList<>(ingredients);
         this.proportions = new ArrayList<>();
+        findProportions();
     }
 
 //    // MODIFIES: this
@@ -41,8 +43,8 @@ public class Recipe implements Writable {
 
     // MODIFIES: this
     // EFFECTS: approximates the proportion of each ingredient in the recipe based on their individual
-    // nutrient / mass ratios. If a Nutrient is not in givenOrder, throw IllegalArgumentException
-    public void findProportions(List<Nutrients> givenOrder) throws IllegalArgumentException {
+    // nutrient / mass ratios.
+    public void findProportions() {
 
         Matrix m = new Matrix(ingredients.size());
         double[] augmented = new double[m.getRowCount()];
@@ -51,7 +53,7 @@ public class Recipe implements Writable {
 
         int count = 0;
 
-        for (Nutrients n : givenOrder) {
+        for (Nutrients n : nf.keySet()) {
             List<Ratio> row = new ArrayList<>();
             for (int i = 0; i < m.getColumnCount(); i++) {
                 if (!ingredients.get(i).getNutrients().containsKey(n)) {
@@ -131,6 +133,26 @@ public class Recipe implements Writable {
     // EFFECTS: returns recipe as a JSON object
     @Override
     public JSONObject toJson() {
-        return null;
+
+        JSONObject result = new JSONObject();
+        JSONArray ingList = new JSONArray();
+        JSONArray props = new JSONArray();
+
+        result.put("name", name);
+
+        result.put("nutrition", facts.toJson());
+
+        for (Ingredient i : ingredients) {
+            ingList.put(i.toJson());
+        }
+
+        for (Double p : proportions) {
+            props.put(p);
+        }
+
+        result.put("ingredients", ingList);
+        result.put("proportions", props);
+
+        return result;
     }
 }

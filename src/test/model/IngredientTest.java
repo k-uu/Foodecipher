@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +16,7 @@ public class IngredientTest {
     List<Nutrients> order;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
 
         i1 = new Ingredient("Milk");
         r1 = new Ratio(2, 10);
@@ -23,7 +25,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void testIngredient() {
+    void testIngredient() {
 
         assertEquals("Milk", i1.getName());
         assertEquals(0, i1.getNutrients().size());
@@ -31,7 +33,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void addMultipleNutrientRatioTest() {
+    void addMultipleNutrientRatioTest() {
 
         i1.addNutrientRatio(Nutrients.CARBOHYDRATE, r1);
         i1.addNutrientRatio(Nutrients.SATURATED_FAT, r2);
@@ -50,7 +52,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void removeMultipleNutrientRatioTrue() {
+    void removeMultipleNutrientRatioTrue() {
 
         i1.addNutrientRatio(Nutrients.CARBOHYDRATE, r1);
         i1.addNutrientRatio(Nutrients.SATURATED_FAT, r2);
@@ -64,7 +66,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void removeNutrientRatioFalse() {
+    void removeNutrientRatioFalse() {
 
         assertFalse(i1.removeNutrientRatio(Nutrients.CARBOHYDRATE));
 
@@ -85,7 +87,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void changeNutrientRatioTrue() {
+    void changeNutrientRatioTrue() {
 
         i1.addNutrientRatio(Nutrients.CARBOHYDRATE, r1);
 
@@ -96,7 +98,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void changeNutrientRatioFalse() {
+    void changeNutrientRatioFalse() {
 
         i1.addNutrientRatio(Nutrients.PROTEIN, r1);
 
@@ -104,5 +106,26 @@ public class IngredientTest {
 
         assertEquals(1, i1.getNutrients().size());
         assertEquals(r1, i1.getNutrients().get(Nutrients.PROTEIN));
+    }
+
+    @Test
+    void toJsonTest() {
+        i1.addNutrientRatio(Nutrients.CARBOHYDRATE, r1);
+        i1.addNutrientRatio(Nutrients.SATURATED_FAT, r2);
+
+        JSONObject ing = i1.toJson();
+
+        assertEquals("Milk", ing.get("name"));
+
+        JSONObject nutrients = ing.getJSONObject("nutrients");
+
+        JSONObject n1 = nutrients.getJSONObject("CARBOHYDRATE");
+        assertEquals(r1.getNumerator(), n1.get("numerator"));
+        assertEquals(r1.getDenominator(), n1.get("denominator"));
+
+        JSONObject n2 = nutrients.getJSONObject("SATURATED_FAT");
+        assertEquals(r2.getNumerator(), n2.get("numerator"));
+        assertEquals(r2.getDenominator(), n2.get("denominator"));
+
     }
 }

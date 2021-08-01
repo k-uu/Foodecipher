@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -52,6 +53,17 @@ public class NutritionFacts implements Writable {
     // EFFECTS: returns nutrition facts as a JSON object
     @Override
     public JSONObject toJson() {
-        return null;
+
+        JSONObject result = new JSONObject();
+        JSONObject nutrients = new JSONObject();
+
+        result.put("servingSize", servingSize);
+
+        for (Map.Entry<Nutrients, Ratio> fact : facts.entrySet()) {
+            nutrients.put(fact.getKey().name(), fact.getValue().toJson());
+        }
+        result.put("facts", nutrients);
+
+        return result;
     }
 }

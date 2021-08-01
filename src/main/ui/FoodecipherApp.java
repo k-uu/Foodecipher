@@ -89,7 +89,7 @@ public class FoodecipherApp {
         List<Recipe> r = recipes.getRecipes();
 
         int last = r.size() - 1;
-        r.get(last).findProportions(nutrients);
+
         if (r.get(last).getProportions().size() == 0) {
             System.out.println("WARNING: Could not find proportions for" + r.get(last).getName());
             recipes.removeRecipe(r.get(last));
@@ -187,7 +187,7 @@ public class FoodecipherApp {
 
         Ratio r;
 
-        System.out.print("amount of " + nutrient.getValue() + " in ingredient: ");
+        System.out.print("Amount of " + nutrient.getValue() + " in ingredient: ");
         int numerator = sc.nextInt();
         sc.nextLine();
         System.out.print("in this serving size: ");
