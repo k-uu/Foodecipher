@@ -1,0 +1,76 @@
+{"recipes": [
+    {
+        "nutrition": {
+            "servingSize": 10,
+            "facts": {"PROTEIN": 8}
+        },
+        "name": "Bread",
+        "ingredients": [
+            {
+                "name": "Flour",
+                "nutrients": {"PROTEIN": {
+                    "numerator": 5,
+                    "denominator": 100
+                }}
+            },
+            {
+                "name": "Yeast",
+                "nutrients": {"PROTEIN": {
+                    "numerator": 2,
+                    "denominator": 10
+                }}
+            }
+        ]
+    },
+    {
+        "nutrition": {
+            "servingSize": 1,
+            "facts": {
+                "PROTEIN": 4,
+                "FIBRE": 3
+            }
+        },
+        "name": "Pie",
+        "ingredients": [
+            {
+                "name": "Apple",
+                "nutrients": {
+                    "PROTEIN": {
+                        "numerator": 4,
+                        "denominator": 1
+                    },
+                    "FIBRE": {
+                        "numerator": 5,
+                        "denominator": 1
+                    }
+                }
+            },
+            {
+                "name": "Cornstarch",
+                "nutrients": {
+                    "PROTEIN": {
+                        "numerator": 3,
+                        "denominator": 1
+                    },
+                    "FIBRE": {
+                        "numerator": 6,
+                        "denominator": 1
+                    }
+                }
+            },
+            {
+                "name": "Sugar",
+                "nutrients": {
+                    "PROTEIN": {
+                        "numerator": 2,
+                        "denominator": 1
+                    },
+                    "FIBRE": {
+                        "numerator": 0,
+                        "denominator": 1
+                    }
+                }
+            }
+        ]
+    }
+]}

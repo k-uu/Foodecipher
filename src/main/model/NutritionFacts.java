@@ -11,7 +11,7 @@ import java.util.Map;
 public class NutritionFacts implements Writable {
 
     private int servingSize;
-    private Map<Nutrients, Ratio> facts;
+    private Map<Nutrients, Integer> facts;
 
     // EFFECTS: creates a map of nutrition facts for the given positive servingSize. If zero or a negative value
     // is given to serving size, throw IllegalArgumentException
@@ -24,7 +24,7 @@ public class NutritionFacts implements Writable {
         this.facts = new EnumMap<>(Nutrients.class);
 
         for (Nutrients n : facts.keySet()) {
-            this.facts.put(n, new Ratio(facts.get(n), servingSize));
+            this.facts.put(n, facts.get(n));
         }
     }
 
@@ -43,7 +43,11 @@ public class NutritionFacts implements Writable {
     // getters
 
     public Map<Nutrients, Ratio> getFacts() {
-        return new EnumMap<>(facts);
+        Map<Nutrients, Ratio> result = new EnumMap<>(Nutrients.class);
+        for (Map.Entry<Nutrients, Integer> fact : facts.entrySet()) {
+            result.put(fact.getKey(), new Ratio(fact.getValue(), servingSize));
+        }
+        return result;
     }
 
     public int getServingSize() {
@@ -59,8 +63,8 @@ public class NutritionFacts implements Writable {
 
         result.put("servingSize", servingSize);
 
-        for (Map.Entry<Nutrients, Ratio> fact : facts.entrySet()) {
-            nutrients.put(fact.getKey().name(), fact.getValue().toJson());
+        for (Map.Entry<Nutrients, Integer> fact : facts.entrySet()) {
+            nutrients.put(fact.getKey().name(), fact.getValue());
         }
         result.put("facts", nutrients);
 

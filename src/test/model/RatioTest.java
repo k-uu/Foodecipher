@@ -19,8 +19,10 @@ public class RatioTest {
         } catch (IllegalArgumentException e) {
             fail("unexpected exception");
         }
-        assertEquals(8, r1.getNumerator());
-        assertEquals(10, r1.getDenominator());
+        assertEquals(-1, r3.getNumerator());
+        assertEquals(4, r3.getDenominator());
+        assertEquals(0, r4.getNumerator());
+        assertEquals(1, r4.getDenominator());
     }
 
     @Test
@@ -154,6 +156,7 @@ public class RatioTest {
         r2 = new Ratio(4, 3);
 
         assertFalse(r1.equals(r2));
+        assertFalse(r1.equals(2));
     }
 
     @Test

@@ -127,5 +127,6 @@ public class IngredientTest {
         assertEquals(r2.getNumerator(), n2.get("numerator"));
         assertEquals(r2.getDenominator(), n2.get("denominator"));
 
+
     }
 }

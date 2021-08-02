@@ -1,0 +1,84 @@
+{
+  "recipes": [
+    {
+      "name": "Bread",
+      "nutrition": {
+        "servingSize": 10,
+        "facts": {
+          "PROTEIN": 8
+        }
+      },
+      "ingredients": [
+        {
+          "name": "Flour",
+          "nutrients": {
+            "PROTEIN": {
+              "numerator": 5,
+              "denominator": 100
+            }
+          }
+        },
+        {
+          "name": "Yeast",
+          "nutrients": {
+            "PROTEIN": {
+              "numerator": 2,
+              "denominator": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pie",
+      "nutrition": {
+        "servingSize": 1,
+        "facts": {
+          "PROTEIN": 4,
+          "FIBRE": 3
+        }
+      },
+      "ingredients": [
+        {
+          "name": "Apple",
+          "nutrients": {
+            "PROTEIN": {
+              "numerator": 4,
+              "denominator": 1
+            },
+            "FIBRE": {
+              "numerator": 5,
+              "denominator": 1
+            }
+          }
+        },
+        {
+          "name": "Cornstarch",
+          "nutrients": {
+            "FIBRE": {
+              "numerator": 6,
+              "denominator": 1
+            },
+            "PROTEIN": {
+              "numerator": 3,
+              "denominator": 1
+            }
+          }
+        },
+        {
+          "name": "Sugar",
+          "nutrients": {
+            "FIBRE": {
+              "numerator": 0,
+              "denominator": 1
+            },
+            "PROTEIN": {
+              "numerator": 2,
+              "denominator": 1
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

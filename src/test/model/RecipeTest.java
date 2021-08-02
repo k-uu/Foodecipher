@@ -82,6 +82,11 @@ public class RecipeTest {
 
     @Test
     void solveMatrixTestSuccess() {
+
+        ingredients.add(i1);
+        ingredients.add(i2);
+        ingredients.add(i3);
+
         double[][] input = {{5, 6, 4}, {2, 3, 5}, {1, 1, 1}};
 
 
@@ -106,6 +111,11 @@ public class RecipeTest {
 
     @Test
     void solveMatrixTestFail() {
+
+        ingredients.add(i1);
+        ingredients.add(i2);
+        ingredients.add(i3);
+
         double[][] input = {{4, 4, 4}, {2, 3, 5}, {1, 1, 1}};
 
         double[] constants = {4, 3, 1};
@@ -191,7 +201,6 @@ public class RecipeTest {
         ingredients.add(i3);
 
         recipe = new Recipe("Bread", nfacts, ingredients);
-        List<Double> expected = recipe.getProportions();
 
         JSONObject jsonRecipe = recipe.toJson();
         assertEquals("Bread", jsonRecipe.get("name"));
@@ -201,21 +210,17 @@ public class RecipeTest {
         assertEquals(1, nutrition.get("servingSize"));
 
         JSONObject facts = nutrition.getJSONObject("facts");
-        assertEquals(nums[6], facts.getJSONObject("CARBOHYDRATE").get("numerator"));
-        assertEquals(1, facts.getJSONObject("CARBOHYDRATE").get("denominator"));
+        assertEquals(nums[6], facts.getInt("CARBOHYDRATE"));
 
-        assertEquals(nums[7], facts.getJSONObject("FIBRE").get("numerator"));
-        assertEquals(1, facts.getJSONObject("FIBRE").get("denominator"));
+        assertEquals(nums[7], facts.getInt("FIBRE"));
 
         JSONArray ingredients = jsonRecipe.getJSONArray("ingredients");
-        JSONArray proportions = jsonRecipe.getJSONArray("proportions");
 
         String[] names = {"col0", "col1", "col2"};
         int n2 = 0;
 
         for (int n = 0; n < ingredients.length(); n++) {
             JSONObject i = ingredients.getJSONObject(n);
-            assertEquals(expected.get(n), proportions.get(n));
             JSONObject nutrients  = i.getJSONObject("nutrients");
             assertEquals(names[n], i.get("name"));
             assertEquals(nums[n2++], nutrients.getJSONObject("CARBOHYDRATE").get("numerator"));

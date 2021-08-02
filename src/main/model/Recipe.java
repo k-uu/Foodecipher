@@ -27,7 +27,7 @@ public class Recipe implements Writable {
         this.name = recipeName;
         this.facts = nutritionFacts;
         this.ingredients = new ArrayList<>(ingredients);
-        this.proportions = new ArrayList<>();
+        this.proportions = new ArrayList<>(ingredients.size());
         findProportions();
     }
 
@@ -56,9 +56,6 @@ public class Recipe implements Writable {
         for (Nutrients n : nf.keySet()) {
             List<Ratio> row = new ArrayList<>();
             for (int i = 0; i < m.getColumnCount(); i++) {
-                if (!ingredients.get(i).getNutrients().containsKey(n)) {
-                    throw new IllegalArgumentException("Nutrient from givenOrder is not in ingredients");
-                }
                 row.add(ingredients.get(i).getNutrients().get(n));
             }
             m.setRow(row, count);
@@ -89,9 +86,12 @@ public class Recipe implements Writable {
             return;
         }
         RealVector solution = solver.solve(constants);
+
+
         for (int i = 0; i < matrix.length; i++) {
-            proportions.add(solution.getEntry(i));
+            proportions.add(i, solution.getEntry(i));
         }
+
 
     }
 
@@ -136,7 +136,6 @@ public class Recipe implements Writable {
 
         JSONObject result = new JSONObject();
         JSONArray ingList = new JSONArray();
-        JSONArray props = new JSONArray();
 
         result.put("name", name);
 
@@ -146,12 +145,7 @@ public class Recipe implements Writable {
             ingList.put(i.toJson());
         }
 
-        for (Double p : proportions) {
-            props.put(p);
-        }
-
         result.put("ingredients", ingList);
-        result.put("proportions", props);
 
         return result;
     }

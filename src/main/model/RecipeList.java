@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -68,6 +69,12 @@ public class RecipeList implements Writable {
     // EFFECTS: returns recipes as a JSON array
     @Override
     public JSONObject toJson() {
-        return null;
+
+        JSONObject result = new JSONObject();
+        JSONArray jsonRecipes = new JSONArray();
+        for (Recipe r : recipes) {
+            jsonRecipes.put(r.toJson());
+        }
+        return result.put("recipes", jsonRecipes);
     }
 }
