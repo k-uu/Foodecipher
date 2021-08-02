@@ -113,24 +113,6 @@ public class Recipe implements Writable {
         return result;
     }
 
-    // getters
-    public String getName() {
-        return name;
-    }
-
-    public List<Double> getProportions() {
-        return proportions;
-    }
-
-    public List<Ingredient> getIngredients() {
-        return new ArrayList<>(ingredients);
-    }
-
-    public NutritionFacts getNutritionFacts() {
-        return this.facts;
-    }
-
-    // EFFECTS: returns recipe as a JSON object
     @Override
     public JSONObject toJson() {
 
@@ -149,4 +131,23 @@ public class Recipe implements Writable {
 
         return result;
     }
+
+    // getters
+    public String getName() {
+        return name;
+    }
+
+    public List<Double> getProportions() {
+        return proportions;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return new ArrayList<>(ingredients);
+    }
+
+    public NutritionFacts getNutritionFacts() {
+        return this.facts;
+    }
+
+
 }

@@ -55,18 +55,6 @@ public class RecipeList implements Writable {
         return result;
     }
 
-    //getters
-    public int getRecipeCount() {
-
-        return recipes.size();
-    }
-
-    public List<Recipe> getRecipes() {
-
-        return new ArrayList<>(recipes);
-    }
-
-    // EFFECTS: returns recipes as a JSON array
     @Override
     public JSONObject toJson() {
 
@@ -76,5 +64,16 @@ public class RecipeList implements Writable {
             jsonRecipes.put(r.toJson());
         }
         return result.put("recipes", jsonRecipes);
+    }
+
+    //getters
+    public int getRecipeCount() {
+
+        return recipes.size();
+    }
+
+    public List<Recipe> getRecipes() {
+
+        return new ArrayList<>(recipes);
     }
 }

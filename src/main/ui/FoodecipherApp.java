@@ -78,22 +78,25 @@ public class FoodecipherApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads the saved recipe list. If no recipe list was saved, loads an empty recipe list.
     private void loadRecipes() {
         JsonReader reader = new JsonReader("./data/recipes.json");
         try {
             recipes = reader.read();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Unable to load recipes...");
         }
     }
 
+    // EFFECTS: writes the current recipe list to a JSON
     private void saveRecipes() {
 
         JsonWriter writer = new JsonWriter("./data/recipes.json");
         try {
             writer.open();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("The storage file was not found...");
         }
         writer.write(recipes);
         writer.close();

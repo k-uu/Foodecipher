@@ -44,15 +44,6 @@ public class Ingredient implements Writable {
         return nutrients.replace(nutrient, nutrients.get(nutrient), ratio);
     }
 
-    // getters
-    public Map<Nutrients, Ratio> getNutrients() {
-        return new EnumMap<>(nutrients);
-    }
-
-    public String getName() {
-        return name;
-    }
-
     // EFFECTS: returns ingredient as a JSON object
     @Override
     public JSONObject toJson() {
@@ -68,5 +59,14 @@ public class Ingredient implements Writable {
         result.put("nutrients", ratios);
 
         return result;
+    }
+
+    // getters
+    public Map<Nutrients, Ratio> getNutrients() {
+        return new EnumMap<>(nutrients);
+    }
+
+    public String getName() {
+        return name;
     }
 }

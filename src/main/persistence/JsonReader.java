@@ -92,6 +92,7 @@ public class JsonReader {
         return i;
     }
 
+    // EFFECTS: returns a deserialized Recipe object
     public Recipe parseRecipe(JSONObject json) {
 
         String name = json.getString("name");

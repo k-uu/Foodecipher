@@ -50,10 +50,6 @@ public class NutritionFacts implements Writable {
         return result;
     }
 
-    public int getServingSize() {
-        return servingSize;
-    }
-
     // EFFECTS: returns nutrition facts as a JSON object
     @Override
     public JSONObject toJson() {
@@ -70,4 +66,10 @@ public class NutritionFacts implements Writable {
 
         return result;
     }
+
+    // getters
+    public int getServingSize() {
+        return servingSize;
+    }
+
 }

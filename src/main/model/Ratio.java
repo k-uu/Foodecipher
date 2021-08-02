@@ -98,6 +98,15 @@ public class Ratio implements Writable {
         return result;
     }
 
+    @Override
+    public JSONObject toJson() {
+
+        JSONObject result = new JSONObject();
+        result.put("numerator", this.numerator);
+        result.put("denominator", this.denominator);
+        return result;
+    }
+
     //getters:
 
     public int getNumerator() {
@@ -114,12 +123,4 @@ public class Ratio implements Writable {
         return ((double) this.numerator) / this.denominator;
     }
 
-    @Override
-    public JSONObject toJson() {
-
-        JSONObject result = new JSONObject();
-        result.put("numerator", this.numerator);
-        result.put("denominator", this.denominator);
-        return result;
-    }
 }
