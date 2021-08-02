@@ -1,7 +1,11 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 // Foodecipher by: Oskar Blyt
@@ -10,6 +14,8 @@ public class FoodecipherApp {
 
     private RecipeList recipes;
     private Scanner sc;
+    private JsonReader reader;
+    private JsonWriter writer;
 
     // EFFECTS: initializes and runs FoodecipherApp
     public FoodecipherApp() {
@@ -33,8 +39,10 @@ public class FoodecipherApp {
             input = sc.nextLine();
             input = input.toLowerCase();
 
+
             if (input.equals("q")) {
                 isRunning = false;
+
             } else if (input.equals("h")) {
                 displayHelp();
             } else {
@@ -53,19 +61,42 @@ public class FoodecipherApp {
             return;
         }
         switch (input) {
-            case "v":
-                viewRecipes();
+            case "v": viewRecipes();
                 System.out.print("Choose a recipe name to view:");
                 input = sc.nextLine();
                 viewRecipe(input);
                 break;
-            case "r":
-                System.out.print("Choose a recipe name to remove:");
+            case "r": System.out.print("Choose a recipe name to remove:");
                 input = sc.nextLine();
                 removeRecipe(input);
                 break;
+            case "s": saveRecipes();
+                break;
+            case "l": loadRecipes();
+                break;
             default: System.out.println("Unknown command :(");
         }
+    }
+
+    private void loadRecipes() {
+        JsonReader reader = new JsonReader("./data/recipes.json");
+        try {
+            recipes = reader.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveRecipes() {
+
+        JsonWriter writer = new JsonWriter("./data/recipes.json");
+        try {
+            writer.open();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        writer.write(recipes);
+        writer.close();
     }
 
 
@@ -274,6 +305,8 @@ public class FoodecipherApp {
                 + "(m) - Make a new recipe" + System.lineSeparator()
                 + "(v) - View an existing recipe" + System.lineSeparator()
                 + "(r) - remove an existing recipe" + System.lineSeparator()
+                + "(s) - save the current recipe list" + System.lineSeparator()
+                + "(l) - load the saved recipe list" + System.lineSeparator()
                 + "(h) - help" + System.lineSeparator()
                 + "(q) - quit";
         System.out.println(menu);

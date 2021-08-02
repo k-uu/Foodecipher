@@ -41,14 +41,14 @@ public class JsonReader {
         StringBuilder contentBuilder = new StringBuilder();
 
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
-            stream.forEach(s -> contentBuilder.append(s));
+            stream.forEach(contentBuilder::append);
         }
 
         return contentBuilder.toString();
     }
 
     // EFFECTS: returns a deserialized RecipeList
-    private RecipeList parseRecipeList(JSONObject json) throws IOException {
+    private RecipeList parseRecipeList(JSONObject json) {
 
         RecipeList recipes = new RecipeList();
         JSONArray jsonRecipes = json.getJSONArray("recipes");
