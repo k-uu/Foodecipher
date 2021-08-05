@@ -107,6 +107,11 @@ public class Ratio implements Writable {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return  numerator + " / " + denominator;
+    }
+
     //getters:
 
     public int getNumerator() {

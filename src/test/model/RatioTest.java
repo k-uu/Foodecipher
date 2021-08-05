@@ -11,7 +11,7 @@ public class RatioTest {
     Ratio r1, r2, r3, r4;
 
     @Test
-    public void testRatioSucceed() {
+    void testRatioSucceed() {
 
         try {
             r3 = new Ratio(-1, 4);
@@ -26,7 +26,7 @@ public class RatioTest {
     }
 
     @Test
-    public void testRatioFail() {
+    void testRatioFail() {
 
         try {
             r1 = new Ratio(10, 0);
@@ -37,7 +37,7 @@ public class RatioTest {
     }
 
     @Test
-    public void addTest() {
+    void addTest() {
 
         r1 = new Ratio(8, 10);
         r2 = new Ratio(4, 3);
@@ -67,7 +67,7 @@ public class RatioTest {
     }
 
     @Test
-    public void subtractTest() {
+    void subtractTest() {
 
         r1 = new Ratio(8, 10);
         r2 = new Ratio(4, 3);
@@ -97,7 +97,7 @@ public class RatioTest {
     }
 
     @Test
-    public void multiplyTest() {
+    void multiplyTest() {
 
         r1 = new Ratio(8, 10);
         r2 = new Ratio(4, 3);
@@ -132,14 +132,14 @@ public class RatioTest {
     }
 
     @Test
-    public void getValueTest() {
+    void getValueTest() {
 
         r1 = new Ratio(8, 10);
         assertEquals(0.8, r1.getValue(), 0.05);
     }
 
     @Test
-    public void equalsTestTrue() {
+    void equalsTestTrue() {
 
         Ratio r5 = new Ratio(8, 6);
         r2 = new Ratio(4, 3);
@@ -150,7 +150,7 @@ public class RatioTest {
     }
 
     @Test
-    public void equalsTestFalse() {
+    void equalsTestFalse() {
 
         r1 = new Ratio(8, 10);
         r2 = new Ratio(4, 3);
@@ -160,7 +160,7 @@ public class RatioTest {
     }
 
     @Test
-    public void hashCodeTest() {
+    void hashCodeTest() {
 
         Ratio r5 = new Ratio(8, 6);
         r2 = new Ratio(4, 3);
@@ -169,13 +169,19 @@ public class RatioTest {
     }
 
     @Test
-    public void toJsonTest() {
+    void toJsonTest() {
         r1 = new Ratio(8, 10);
 
         JSONObject result = r1.toJson();
 
         assertEquals(r1.getNumerator(), result.get("numerator"));
         assertEquals(r1.getDenominator(), result.get("denominator"));
+    }
+
+    @Test
+    void toStringTest() {
+        r1 = new Ratio(8, 10);
+        assertEquals("8 / 10", r1.toString());
     }
 
     private void checkInputs() {
