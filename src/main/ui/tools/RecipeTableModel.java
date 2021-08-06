@@ -23,15 +23,15 @@ public class RecipeTableModel extends AbstractTableModel {
             columnNames[i + 1] = nutrients.get(i).getValue();
         }
 
-        data = new Object[columnNames.length + 1][columnNames.length + 1];
+        data = new Object[columnNames.length + 1][columnNames.length];
         data[columnNames.length][0] = "Nutrition Facts";
 
         for (int i = 1; i < columnNames.length; i++) {
             for (int j = 0; j <= columnNames.length; j++) {
                 data[j][i] = new Ratio(0, 1);
-                data[j][columnNames.length] = new Ratio(1, 1);
             }
         }
+        System.out.println(getColumnCount());
     }
 
     public String getColumnName(int col) {
@@ -51,7 +51,7 @@ public class RecipeTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (data[rowIndex][columnIndex] == null) {
-            return "";
+            return "ing " + rowIndex;
         } else {
             System.out.println(data[rowIndex][columnIndex]);
             return data[rowIndex][columnIndex];

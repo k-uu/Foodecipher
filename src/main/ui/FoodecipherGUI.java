@@ -1,11 +1,14 @@
 package ui;
 
+import model.Recipe;
+import model.RecipeList;
 import ui.tools.RecipeTable;
 import ui.tools.RecipesEditor;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 // A graphical user interface for Foodecipher. Inspired by
 public class FoodecipherGUI extends JFrame {
@@ -17,6 +20,7 @@ public class FoodecipherGUI extends JFrame {
     private JMenuItem help;
     private RecipeTable table;
     private RecipesEditor editor;
+    private RecipeList recipes;
 
     private int tabCount;
 
@@ -47,10 +51,11 @@ public class FoodecipherGUI extends JFrame {
         initMenu();
         add(panes);
         tabCount = 0;
+        recipes = new RecipeList();
 
         initTab(HOME_PANEL);
 
-        setSize(450, 260);
+        setSize(900, 520);
 
         setLocationRelativeTo(null);
         setVisible(true);
@@ -121,7 +126,7 @@ public class FoodecipherGUI extends JFrame {
         makeRecipe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RecipeTable table = new RecipeTable(FoodecipherGUI.this);
+                table = new RecipeTable(FoodecipherGUI.this);
                 initTab(table);
             }
         });
@@ -139,6 +144,17 @@ public class FoodecipherGUI extends JFrame {
             }
         });
         menu.add(help);
+    }
+
+    // REQUIRES: the new recipe name doesn't already exists in recipes
+    // MODIFIES: this
+    // EFFECTS: adds a recipe to the recipe list
+    public void addRecipe(Recipe r) {
+        recipes.addRecipe(r);
+    }
+
+    public List<Recipe> getRecipes() {
+        return recipes.getRecipes();
     }
 
 }

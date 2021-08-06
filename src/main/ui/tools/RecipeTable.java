@@ -1,39 +1,116 @@
 package ui.tools;
 
-import model.Nutrients;
-import model.Ratio;
+import model.*;
+import ui.FoodecipherGUI;
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+// Represents a table to input values required to create a new recipe
 public class RecipeTable extends JPanel {
+
+    private JButton button;
+    private JTable table;
+    private List<Nutrients> nutrients;
+    private Recipe recipe;
+    private FoodecipherGUI frame;
+
+    private int servingSize;
+    private String recipeName;
 
     // EFFECTS: creates an empty table with n rows and n+1 columns that accepts integer values.
     // Each column has label with an un-editable combo box.
-    public RecipeTable(JFrame frame) {
+    public RecipeTable(FoodecipherGUI frame) {
 
-        super(new GridLayout(1,0));
+        super(new GridLayout(2,0));
 
         setName("RecipeTable");
+        this.frame = frame;
 
-        List<Nutrients> n = new ArrayList<>();
-        n.add(Nutrients.SATURATED_FAT);
-        n.add(Nutrients.SUGARS);
-        n.add(Nutrients.PROTEIN);
+        RecipeDialog d = new RecipeDialog(frame);
+        d.setLocationRelativeTo(frame);
+        d.setVisible(true);
+        nutrients = d.getNutrients();
+        recipeName = d.getChosenName();
+        servingSize = d.getServingSize();
 
-        RatioDialog dialog = new RatioDialog(frame);
-        dialog.setLocationRelativeTo(frame);
+        RatioDialog ratioDialog = new RatioDialog(frame);
+        ratioDialog.setLocationRelativeTo(frame);
 
-        JTable table = new JTable(new RecipeTableModel(n));
+        table = new JTable(new RecipeTableModel(nutrients));
 
         JScrollPane scrollPane = new JScrollPane(table);
-
-        table.setDefaultEditor(Ratio.class,
-                new RatioEditor(dialog));
-
         add(scrollPane);
+
+        table.setDefaultEditor(Ratio.class, new RatioEditor(ratioDialog));
+
+        button = new JButton("Make recipe!");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                convertToRecipe();
+            }
+        });
+        add(button);
     }
 
+    // REQUIRES: cells with column index > 0 are type Ratio and index 0 are type String
+    // MODIFIES: this
+    // EFFECTS: takes data from JTable and makes it into a Recipe
+    private void convertToRecipe() {
+        TableModel data = table.getModel();
+
+        List<Ingredient> ingredients = new ArrayList<>();
+
+        for (int r = 0; r < data.getRowCount() - 1; r++) {
+            Ingredient ing = new Ingredient((String)data.getValueAt(r, 0));
+            for (int c = 1; c < data.getColumnCount(); c++) {
+                ing.addNutrientRatio(nutrients.get(c - 1), (Ratio)data.getValueAt(r, c));
+            }
+            ingredients.add(ing);
+        }
+
+        checkName();
+
+        Recipe r = new Recipe(recipeName, convertToNutritionFacts(data), ingredients);
+        if (r.getProportions().size() != 0) {
+            frame.addRecipe(r); // add successful recipe to recipe list
+        } else {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(
+                    RecipeTable.this,
+                    "Unable to find proportions, please try a different combination of ingredients and/or"
+                            + " nutrients",
+                    "Try again",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // EFFECTS: extracts NutritionFacts from data
+    private NutritionFacts convertToNutritionFacts(TableModel data) {
+
+        Map<Nutrients, Integer> facts = new HashMap<>();
+        for (int i = 1; i < table.getColumnCount(); i++) {
+            Ratio ratio = (Ratio)data.getValueAt(table.getRowCount() - 1, i);
+            facts.put(nutrients.get(i - 1), ratio.getNumerator());
+        }
+        return new NutritionFacts(servingSize, facts);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: ensures that recipe names are unique
+    private void checkName() {
+        for (Recipe r :frame.getRecipes()) {
+            if (r.getName().equals(recipeName)) {
+                recipeName = r.getName() + "~";
+            }
+        }
+    }
 }
