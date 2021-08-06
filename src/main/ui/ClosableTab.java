@@ -50,7 +50,8 @@ public class ClosableTab extends JPanel {
             }
         }
 
-        //EFFECTS: draw button graphic
+        // MODIFIES: this
+        // EFFECTS: draw button graphic
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
 

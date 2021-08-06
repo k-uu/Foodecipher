@@ -2,12 +2,16 @@ package ui;
 
 import model.Recipe;
 import model.RecipeList;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 import ui.tools.RecipeTable;
 import ui.tools.RecipesEditor;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 // A graphical user interface for Foodecipher. Inspired by
@@ -84,9 +88,11 @@ public class FoodecipherGUI extends JFrame {
         menuBar.add(menu);
 
         addMakeOption(menu);
-        addLoadOption(menu);
+        addViewOption(menu);
         addSaveOption(menu);
+        addLoadOption(menu);
         addHelpOption(menu);
+
 
         setJMenuBar(menuBar);
     }
@@ -98,7 +104,14 @@ public class FoodecipherGUI extends JFrame {
         saveRecipes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                JsonWriter writer = new JsonWriter("./data/recipes.json");
+                try {
+                    writer.open();
+                } catch (FileNotFoundException exception) {
+                    System.out.println("The storage file was not found...");
+                }
+                writer.write(recipes);
+                writer.close();
             }
         });
         menu.add(saveRecipes);
@@ -113,7 +126,12 @@ public class FoodecipherGUI extends JFrame {
         loadRecipes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                JsonReader reader = new JsonReader("./data/recipes.json");
+                try {
+                    recipes = reader.read();
+                } catch (IOException exception) {
+                    System.out.println("Unable to load recipes...");
+                }
             }
         });
         menu.add(loadRecipes);
@@ -146,11 +164,33 @@ public class FoodecipherGUI extends JFrame {
         menu.add(help);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds a view option to menu
+    private void addViewOption(JMenu menu) {
+        JMenuItem view = new JMenuItem("View recipes");
+        view.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editor = new RecipesEditor(FoodecipherGUI.this);
+                initTab(editor);
+            }
+        });
+        menu.add(view);
+    }
+
+
+
     // REQUIRES: the new recipe name doesn't already exists in recipes
     // MODIFIES: this
     // EFFECTS: adds a recipe to the recipe list
     public void addRecipe(Recipe r) {
         recipes.addRecipe(r);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes recipe from recipe list
+    public boolean removeRecipe(Recipe r) {
+        return recipes.removeRecipe(r);
     }
 
     public List<Recipe> getRecipes() {

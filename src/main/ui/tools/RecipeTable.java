@@ -52,12 +52,14 @@ public class RecipeTable extends JPanel {
         table.setDefaultEditor(Ratio.class, new RatioEditor(ratioDialog));
 
         button = new JButton("Make recipe!");
-        button.addActionListener(new ActionListener() {
+
+        setButtonActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 convertToRecipe();
             }
         });
+
         add(button);
     }
 
@@ -90,6 +92,7 @@ public class RecipeTable extends JPanel {
                             + " nutrients",
                     "Try again",
                     JOptionPane.ERROR_MESSAGE);
+
         }
     }
 
@@ -112,5 +115,11 @@ public class RecipeTable extends JPanel {
                 recipeName = r.getName() + "~";
             }
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds an ActionListener to make recipe button
+    public void setButtonActionListener(ActionListener listener) {
+        button.addActionListener(listener);
     }
 }
