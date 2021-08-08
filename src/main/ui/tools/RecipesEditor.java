@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// Represents a mutable list of recipes created so far
 public class RecipesEditor extends JPanel implements ListSelectionListener {
 
     private DefaultListModel<LabeledRecipe> listModel;
@@ -23,6 +24,7 @@ public class RecipesEditor extends JPanel implements ListSelectionListener {
     private static final String removeString = "Remove";
     private static final String viewString = "View";
 
+    // EFFECTS: instantiates list and adds recipes created so far to it
     public RecipesEditor(FoodecipherGUI frame) {
         super(new BorderLayout());
         setName("Recipe Editor");
@@ -63,14 +65,17 @@ public class RecipesEditor extends JPanel implements ListSelectionListener {
             if (list.getSelectedIndex() == -1) {
                 //No selection, disable fire button.
                 removeButton.setEnabled(false);
+                viewButton.setEnabled(false);
 
             } else {
                 //Selection, enable the fire button.
                 removeButton.setEnabled(true);
+                viewButton.setEnabled(true);
             }
         }
     }
 
+    // Represents a listener for removing a recipe from the list
     private class RemoveListener implements ActionListener {
 
         // MODIFIES: this
@@ -80,8 +85,9 @@ public class RecipesEditor extends JPanel implements ListSelectionListener {
 
             int index = list.getSelectedIndex();
 
-            listModel.remove(index);
             frame.removeRecipe(list.getSelectedValue().getRecipe());
+            listModel.remove(index);
+            System.out.println(frame.getRecipes());
 
             int size = listModel.getSize();
 
@@ -99,6 +105,7 @@ public class RecipesEditor extends JPanel implements ListSelectionListener {
         }
     }
 
+    // Represents a listener for viewing an existing recipe
     private class ViewListener implements ActionListener {
 
         @Override
@@ -113,6 +120,7 @@ public class RecipesEditor extends JPanel implements ListSelectionListener {
         }
     }
 
+    // Represents a wrapper for a Recipe that has a recipe name field.
     private class LabeledRecipe {
 
         private final String label;

@@ -3,11 +3,15 @@ package ui.tools;
 import model.*;
 import ui.FoodecipherGUI;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,14 +23,14 @@ public class RecipeTable extends JPanel {
     private JButton button;
     private JTable table;
     private List<Nutrients> nutrients;
-    private Recipe recipe;
     private FoodecipherGUI frame;
 
     private int servingSize;
     private String recipeName;
 
-    // EFFECTS: creates an empty table with n rows and n+1 columns that accepts integer values.
-    // Each column has label with an un-editable combo box.
+    // EFFECTS: creates a table with n rows and n+1 columns that accepts integer values. The first column contains
+    // recipe names, the last row contains nutrition fact ratios and the remaining cells contain ingredient nutrient
+    // ratios
     public RecipeTable(FoodecipherGUI frame) {
 
         super(new GridLayout(2,0));
@@ -65,7 +69,8 @@ public class RecipeTable extends JPanel {
 
     // REQUIRES: cells with column index > 0 are type Ratio and index 0 are type String
     // MODIFIES: this
-    // EFFECTS: takes data from JTable and makes it into a Recipe
+    // EFFECTS: takes data from JTable and makes it into a Recipe. Displays message if unsuccessful
+    // otherwise plays sound 
     private void convertToRecipe() {
         TableModel data = table.getModel();
 
@@ -84,6 +89,7 @@ public class RecipeTable extends JPanel {
         Recipe r = new Recipe(recipeName, convertToNutritionFacts(data), ingredients);
         if (r.getProportions().size() != 0) {
             frame.addRecipe(r); // add successful recipe to recipe list
+            playSound();
         } else {
             Toolkit.getDefaultToolkit().beep();
             JOptionPane.showMessageDialog(
@@ -121,5 +127,17 @@ public class RecipeTable extends JPanel {
     // EFFECTS: adds an ActionListener to make recipe button
     public void setButtonActionListener(ActionListener listener) {
         button.addActionListener(listener);
+    }
+
+    // EFFECTS: plays a wav sound file.
+    public void playSound() {
+        try {
+            AudioInputStream stream = AudioSystem.getAudioInputStream(new File("./data/bonappetit.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(stream);
+            clip.start();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

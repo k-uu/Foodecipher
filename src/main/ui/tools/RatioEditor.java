@@ -7,6 +7,7 @@ import javax.swing.table.TableCellEditor;
 import java.awt.*;
 import java.awt.event.*;
 
+// Represents a table cell editor for Ratios
 public class RatioEditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
 
     private Ratio currentRatio;
@@ -17,6 +18,7 @@ public class RatioEditor extends AbstractCellEditor implements TableCellEditor, 
 
     protected static final String EDIT = "edit";
 
+    // EFFECTS: instantiates the button and dialog associated with editing a Ratio cell
     public RatioEditor(RatioDialog dialog) {
 
         button = new JButton();

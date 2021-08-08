@@ -22,6 +22,7 @@ public class RatioDialog extends JDialog implements ActionListener, PropertyChan
     private String enter = "Enter";
     private String cancel = "Cancel";
 
+    // EFFECTS: create option pane
     public RatioDialog(JFrame frame) {
         super(frame, true);
 
@@ -88,7 +89,6 @@ public class RatioDialog extends JDialog implements ActionListener, PropertyChan
         } else {
             chosenRatio = null;
             clearAndHide();
-            System.out.println("clicked cancel");
         }
     }
 
@@ -115,6 +115,8 @@ public class RatioDialog extends JDialog implements ActionListener, PropertyChan
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: clears text fields and sets dialog visibility to false
     public void clearAndHide() {
         numeratorField.setText(null);
         denominatorField.setText(null);

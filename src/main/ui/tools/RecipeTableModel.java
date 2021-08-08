@@ -6,14 +6,14 @@ import model.Ratio;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
+// Represents a table model for a creating a Recipe
 public class RecipeTableModel extends AbstractTableModel {
 
     private String[] columnNames;
     private Object[][] data;
 
 
-    // EFFECTS: constructs a table model based on the number of nutrients. The last column is saved for calculating
-    // the proportions
+    // EFFECTS: constructs a table model with dimensions based on the size of nutrients.
     public RecipeTableModel(List<Nutrients> nutrients) {
 
         columnNames = new String[nutrients.size() + 1];
@@ -34,6 +34,7 @@ public class RecipeTableModel extends AbstractTableModel {
         System.out.println(getColumnCount());
     }
 
+    // EFFECTS: returns the column name
     public String getColumnName(int col) {
         return columnNames[col];
     }

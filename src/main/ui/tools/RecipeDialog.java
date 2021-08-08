@@ -14,6 +14,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+// Represents a dialog that collects input for creating a new recipe
 public class RecipeDialog extends JDialog implements ActionListener, PropertyChangeListener {
 
     private String chosenName;
@@ -25,6 +26,7 @@ public class RecipeDialog extends JDialog implements ActionListener, PropertyCha
 
     private String enter = "Enter";
 
+    // EFFECTS: creates a new recipe dialog
     public RecipeDialog(JFrame frame) {
         super(frame, true);
         setTitle("New Recipe");
@@ -63,6 +65,8 @@ public class RecipeDialog extends JDialog implements ActionListener, PropertyCha
         pack();
     }
 
+    // MODIFIES: this
+    // EFFECTS: create the checkboxes for nutrient selection
     private Object[] initCheckboxes() {
         List<Object> result = new ArrayList<>();
         for (Nutrients n : Nutrients.values()) {
@@ -100,6 +104,9 @@ public class RecipeDialog extends JDialog implements ActionListener, PropertyCha
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: ensures that the serving size is > 0 and at least one nutrient was selected before setting the fields.
+    // Creates an error message if either is not satisfied.
     private void validateInput(Object value) {
 
         String size = servingSizeField.getText();
@@ -148,6 +155,8 @@ public class RecipeDialog extends JDialog implements ActionListener, PropertyCha
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: clears text fields and sets dialog visibility to false
     private void clearAndHide() {
         setVisible(false);
         nameField.setText(null);

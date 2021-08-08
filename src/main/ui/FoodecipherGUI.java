@@ -31,8 +31,9 @@ public class FoodecipherGUI extends JFrame {
     private static final JPanel HOME_PANEL = initHome();
 
     private static JPanel initHome() {
+        ImageIcon icon = new ImageIcon("./data/home.png");
         JPanel p = new JPanel();
-        p.add(new JLabel("sas"));
+        p.add(new JLabel(icon));
         p.setName("Home");
         return p;
     }
