@@ -1,4 +1,4 @@
-package ui.tools;
+package ui;
 
 import model.Ratio;
 
@@ -85,6 +85,7 @@ public class RatioDialog extends JDialog implements ActionListener, PropertyChan
                         JOptionPane.ERROR_MESSAGE);
                 numeratorField.setText(null);
                 denominatorField.setText(null);
+                numeratorField.requestFocusInWindow();
             }
         } else {
             chosenRatio = null;

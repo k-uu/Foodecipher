@@ -1,4 +1,4 @@
-package ui.tools;
+package ui;
 
 import model.Nutrients;
 
@@ -125,6 +125,7 @@ public class RecipeDialog extends JDialog implements ActionListener, PropertyCha
                         "Provide a valid serving size", "Try again",
                         JOptionPane.ERROR_MESSAGE);
                 servingSizeField.setText(null);
+                servingSizeField.requestFocusInWindow();
             } else {
                 servingSize = Integer.parseInt(size);
                 clearAndHide();

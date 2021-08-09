@@ -1,6 +1,7 @@
 package ui.tools;
 
 import model.Ratio;
+import ui.RatioDialog;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;

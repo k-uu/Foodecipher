@@ -2,6 +2,8 @@ package ui.tools;
 
 import model.*;
 import ui.FoodecipherGUI;
+import ui.RatioDialog;
+import ui.RecipeDialog;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -70,7 +72,7 @@ public class RecipeTable extends JPanel {
     // REQUIRES: cells with column index > 0 are type Ratio and index 0 are type String
     // MODIFIES: this
     // EFFECTS: takes data from JTable and makes it into a Recipe. Displays message if unsuccessful
-    // otherwise plays sound 
+    // otherwise plays sound
     private void convertToRecipe() {
         TableModel data = table.getModel();
 

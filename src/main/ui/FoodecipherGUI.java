@@ -8,13 +8,15 @@ import ui.tools.RecipeTable;
 import ui.tools.RecipesEditor;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-// A graphical user interface for Foodecipher. Inspired by
+// A graphical user interface for Foodecipher. Multiple elements of this GUI were adapted from Oracle Java Tutorials:
+// https://docs.oracle.com/javase/tutorial/uiswing/examples/components/
 public class FoodecipherGUI extends JFrame {
 
     private final JTabbedPane panes = new JTabbedPane();
@@ -22,6 +24,7 @@ public class FoodecipherGUI extends JFrame {
     private JMenuItem loadRecipes;
     private JMenuItem saveRecipes;
     private JMenuItem help;
+    private JLabel saveStatus;
     private RecipeTable table;
     private RecipesEditor editor;
     private RecipeList recipes;
@@ -30,6 +33,8 @@ public class FoodecipherGUI extends JFrame {
 
     private static final JPanel HOME_PANEL = initHome();
 
+    // MODIFIES: this
+    // EFFECTS: creates home panel
     private static JPanel initHome() {
         ImageIcon icon = new ImageIcon("./data/home.png");
         JPanel p = new JPanel();
@@ -41,9 +46,12 @@ public class FoodecipherGUI extends JFrame {
 
     private static final JPanel HELP_PANEL = initHelp();
 
+    // MODIFIES: this
+    // EFFECTS: creates help panel
     private static JPanel initHelp() {
+        ImageIcon icon = new ImageIcon("./data/help.png");
         JPanel p = new JPanel();
-        p.add(new JLabel("succ"));
+        p.add(new JLabel(icon));
         p.setName("Help");
         return p;
     }
@@ -86,14 +94,19 @@ public class FoodecipherGUI extends JFrame {
 
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Options");
-        menuBar.add(menu);
+
+        saveStatus = new JLabel("");
 
         addMakeOption(menu);
         addViewOption(menu);
+        menu.addSeparator();
         addSaveOption(menu);
         addLoadOption(menu);
         addHelpOption(menu);
 
+        menuBar.add(menu);
+        menuBar.add(new JSeparator());
+        menuBar.add(saveStatus);
 
         setJMenuBar(menuBar);
     }
@@ -108,8 +121,9 @@ public class FoodecipherGUI extends JFrame {
                 JsonWriter writer = new JsonWriter("./data/recipes.json");
                 try {
                     writer.open();
+                    setSaveStatus(" Saved recipes! ");
                 } catch (FileNotFoundException exception) {
-                    System.out.println("The storage file was not found...");
+                    setSaveStatus(" The storage file was not found ");
                 }
                 writer.write(recipes);
                 writer.close();
@@ -119,19 +133,24 @@ public class FoodecipherGUI extends JFrame {
     }
 
     // MODIFIES: this
+    // sets the save status in the menu bar
+    private void setSaveStatus(String status) {
+        saveStatus.setText(status);
+    }
+
+    // MODIFIES: this
     // EFFECTS: adds a load option to menu
     private void addLoadOption(JMenu menu) {
         loadRecipes = new JMenuItem("Load recipes");
-        loadRecipes.getAccessibleContext().setAccessibleDescription(
-                "Load the recipes that were last saved");
         loadRecipes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JsonReader reader = new JsonReader("./data/recipes.json");
                 try {
                     recipes = reader.read();
+                    setSaveStatus(" Loaded recipes! ");
                 } catch (IOException exception) {
-                    System.out.println("Unable to load recipes...");
+                    setSaveStatus(" Unable to load recipes ");
                 }
             }
         });
@@ -147,6 +166,7 @@ public class FoodecipherGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 table = new RecipeTable(FoodecipherGUI.this);
                 initTab(table);
+                table.requestFocusInWindow();
             }
         });
         menu.add(makeRecipe);
@@ -159,21 +179,29 @@ public class FoodecipherGUI extends JFrame {
         help.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                initTab(HELP_PANEL);
             }
         });
         menu.add(help);
     }
 
     // MODIFIES: this
-    // EFFECTS: adds a view option to menu
+    // EFFECTS: adds a view option to menu. If there are no recipes to view, display an error message instead
     private void addViewOption(JMenu menu) {
         JMenuItem view = new JMenuItem("View recipes");
         view.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                editor = new RecipesEditor(FoodecipherGUI.this);
-                initTab(editor);
+                if (recipes.getRecipes().size() != 0) {
+                    editor = new RecipesEditor(FoodecipherGUI.this);
+                    initTab(editor);
+                } else {
+                    Toolkit.getDefaultToolkit().beep();
+                    JOptionPane.showMessageDialog(
+                            FoodecipherGUI.this,
+                            "There are no recipes to view", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         menu.add(view);
@@ -194,6 +222,7 @@ public class FoodecipherGUI extends JFrame {
         return recipes.removeRecipe(r);
     }
 
+    // EFFECTS: returns the current list of recipes
     public List<Recipe> getRecipes() {
         return recipes.getRecipes();
     }
