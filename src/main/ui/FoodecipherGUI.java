@@ -75,11 +75,12 @@ public class FoodecipherGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: add a new Tab and Panel to panes.
+    // EFFECTS: add a new Panel to panes and set focus on it
     private void initTab(JPanel panel) {
         panes.add(panel);
         tabCount = panes.getTabCount() - 1;
         initTabComponent(tabCount, panel.getName());
+        panes.setSelectedIndex(tabCount);
     }
 
     // MODIFIES: panes
