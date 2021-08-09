@@ -46,7 +46,6 @@ public class ClosableTab extends JPanel {
             int i = panes.indexOfTabComponent(ClosableTab.this);
             if (i != -1) {
                 panes.remove(i);
-
             }
         }
 

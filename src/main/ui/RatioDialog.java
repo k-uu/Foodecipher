@@ -74,7 +74,6 @@ public class RatioDialog extends JDialog implements ActionListener, PropertyChan
             try {
                 chosenRatio = new Ratio(Integer.parseInt(numeratorField.getText()),
                         Integer.parseInt(denominatorField.getText()));
-                System.out.println(chosenRatio); // TEST
                 clearAndHide();
             } catch (IllegalArgumentException e) {
                 Toolkit.getDefaultToolkit().beep();

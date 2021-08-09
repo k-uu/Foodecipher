@@ -31,7 +31,6 @@ public class RecipeTableModel extends AbstractTableModel {
                 data[j][i] = new Ratio(0, 1);
             }
         }
-        System.out.println(getColumnCount());
     }
 
     // EFFECTS: returns the column name
@@ -54,7 +53,6 @@ public class RecipeTableModel extends AbstractTableModel {
         if (data[rowIndex][columnIndex] == null) {
             return "ing " + rowIndex;
         } else {
-            System.out.println(data[rowIndex][columnIndex]);
             return data[rowIndex][columnIndex];
         }
     }

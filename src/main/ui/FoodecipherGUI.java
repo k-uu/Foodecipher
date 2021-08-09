@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 // A graphical user interface for Foodecipher. Multiple elements of this GUI were adapted from Oracle Java Tutorials:
@@ -28,6 +29,7 @@ public class FoodecipherGUI extends JFrame {
     private RecipeTable table;
     private RecipesEditor editor;
     private RecipeList recipes;
+    private RecipesObservable observable;
 
     private int tabCount;
 
@@ -67,6 +69,7 @@ public class FoodecipherGUI extends JFrame {
         recipes = new RecipeList();
 
         initTab(HOME_PANEL);
+        observable = new RecipesObservable();
 
         setSize(900, 520);
 
@@ -112,6 +115,44 @@ public class FoodecipherGUI extends JFrame {
         setJMenuBar(menuBar);
     }
 
+    // Represents an observable for the Recipe list in the top level class
+    private class RecipesObservable {
+
+        private List<RecipesObserver> observers;
+
+        // EFFECTS: creates empty observer list
+        private RecipesObservable() {
+            observers = new ArrayList<>();
+        }
+
+        // MODIFIES: this
+        // EFFECTS: adds an observer
+        public void attach(RecipesObserver obs) {
+            observers.add(obs);
+        }
+
+        // MODIFIES: this
+        // EFFECTS: removes an observer
+        public void detach(RecipesObserver obs) {
+            observers.remove(obs);
+        }
+
+        // MODIFIES: this
+        // EFFECTS: notifies all visible observers
+        private void notifyChange() {
+            cleanUp();
+            for (RecipesObserver r : observers) {
+                r.update();
+            }
+        }
+
+        // MODIFIES: this
+        // EFFECTS: removes any observers that are no longer accessible by any other source
+        private void cleanUp() {
+            observers.removeIf(r -> !r.visible());
+        }
+    }
+
     // MODIFIES: this
     // EFFECTS: adds a save option to menu
     private void addSaveOption(JMenu menu) {
@@ -149,6 +190,7 @@ public class FoodecipherGUI extends JFrame {
                 JsonReader reader = new JsonReader("./data/recipes.json");
                 try {
                     recipes = reader.read();
+                    observable.notifyChange();
                     setSaveStatus(" Loaded recipes! ");
                 } catch (IOException exception) {
                     setSaveStatus(" Unable to load recipes ");
@@ -195,7 +237,9 @@ public class FoodecipherGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (recipes.getRecipes().size() != 0) {
                     editor = new RecipesEditor(FoodecipherGUI.this);
+                    observable.attach(editor);
                     initTab(editor);
+                    observable.notifyChange();
                 } else {
                     Toolkit.getDefaultToolkit().beep();
                     JOptionPane.showMessageDialog(
@@ -215,12 +259,14 @@ public class FoodecipherGUI extends JFrame {
     // EFFECTS: adds a recipe to the recipe list
     public void addRecipe(Recipe r) {
         recipes.addRecipe(r);
+        observable.notifyChange();
     }
 
     // MODIFIES: this
     // EFFECTS: removes recipe from recipe list
-    public boolean removeRecipe(Recipe r) {
-        return recipes.removeRecipe(r);
+    public void removeRecipe(Recipe r) {
+        recipes.removeRecipe(r);
+        observable.notifyChange();
     }
 
     // EFFECTS: returns the current list of recipes

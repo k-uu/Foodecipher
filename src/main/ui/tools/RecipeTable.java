@@ -35,7 +35,7 @@ public class RecipeTable extends JPanel {
     // ratios
     public RecipeTable(FoodecipherGUI frame) {
 
-        super(new GridLayout(2,0));
+        super(new BorderLayout());
 
         setName("RecipeTable");
         this.frame = frame;
@@ -52,21 +52,33 @@ public class RecipeTable extends JPanel {
 
         table = new JTable(new RecipeTableModel(nutrients));
 
-        JScrollPane scrollPane = new JScrollPane(table);
-        add(scrollPane);
+        JScrollPane scrollTable = new JScrollPane(table);
 
         table.setDefaultEditor(Ratio.class, new RatioEditor(ratioDialog));
 
+        add(scrollTable, BorderLayout.CENTER);
+        add(makeButtonPanel(), BorderLayout.PAGE_END);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates button panel for creating recipe
+    private JPanel makeButtonPanel() {
         button = new JButton("Make recipe!");
 
-        setButtonActionListener(new ActionListener() {
+        button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 convertToRecipe();
             }
         });
 
-        add(button);
+        JPanel buttonPane = new JPanel();
+        buttonPane.setLayout(new BoxLayout(buttonPane,
+                BoxLayout.LINE_AXIS));
+
+        buttonPane.add(button);
+
+        return buttonPane;
     }
 
     // REQUIRES: cells with column index > 0 are type Ratio and index 0 are type String
@@ -123,12 +135,6 @@ public class RecipeTable extends JPanel {
                 recipeName = r.getName() + "~";
             }
         }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds an ActionListener to make recipe button
-    public void setButtonActionListener(ActionListener listener) {
-        button.addActionListener(listener);
     }
 
     // EFFECTS: plays a wav sound file.

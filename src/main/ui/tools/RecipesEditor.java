@@ -2,6 +2,7 @@ package ui.tools;
 
 import model.Recipe;
 import ui.FoodecipherGUI;
+import ui.RecipesObserver;
 
 
 import javax.swing.*;
@@ -12,13 +13,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 // Represents a mutable list of recipes created so far
-public class RecipesEditor extends JPanel implements ListSelectionListener {
+public class RecipesEditor extends JPanel implements ListSelectionListener, RecipesObserver {
 
-    private DefaultListModel<LabeledRecipe> listModel;
-    private FoodecipherGUI frame;
-    private JList<LabeledRecipe> list;
-    private JButton removeButton;
-    private JButton viewButton;
+    private final DefaultListModel<LabeledRecipe> listModel;
+    private final FoodecipherGUI frame;
+    private final JList<LabeledRecipe> list;
+    private final JButton removeButton;
+    private final JButton viewButton;
 
 
     private static final String removeString = "Remove";
@@ -30,10 +31,6 @@ public class RecipesEditor extends JPanel implements ListSelectionListener {
         setName("Recipe Editor");
         listModel = new DefaultListModel();
         this.frame = frame;
-
-        for (Recipe r : frame.getRecipes()) {
-            listModel.addElement(new LabeledRecipe(r));
-        }
 
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -75,6 +72,19 @@ public class RecipesEditor extends JPanel implements ListSelectionListener {
         }
     }
 
+    @Override
+    public void update() {
+        listModel.clear();
+        for (Recipe r : frame.getRecipes()) {
+            listModel.addElement(new LabeledRecipe(r));
+        }
+    }
+
+    @Override
+    public boolean visible() {
+        return (getParent() != null);
+    }
+
     // Represents a listener for removing a recipe from the list
     private class RemoveListener implements ActionListener {
 
@@ -85,9 +95,11 @@ public class RecipesEditor extends JPanel implements ListSelectionListener {
 
             int index = list.getSelectedIndex();
 
+            if (index == -1) {
+                return;
+            }
+
             frame.removeRecipe(list.getSelectedValue().getRecipe());
-            listModel.remove(index);
-            System.out.println(frame.getRecipes());
 
             int size = listModel.getSize();
 
