@@ -27,3 +27,6 @@ As a user, I would like to be able to:
 > - remove an ingredient from an existing recipe
 > - save all existing recipes to a file
 > - load all saved recipes from a file
+
+### Phase 4: Task 2
+robust class: NutritionFacts - constructor

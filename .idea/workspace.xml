@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Foodecipher:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="0b0657cc-ee15-4fe7-b40a-5c96c3a94302" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project-Starter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Project-Starter.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project-Starter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Foodecipher.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/model/NutritionFactsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/model/NutritionFactsTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/exportToHTML" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -48,15 +56,16 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/lib" />
+      <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/data" />
+      <recent name="$PROJECT_DIR$/lib" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="model" />
@@ -66,7 +75,7 @@
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.Main" />
-      <module name="Project-Starter" />
+      <module name="Foodecipher" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="ui.*" />
@@ -78,7 +87,7 @@
       </method>
     </configuration>
     <configuration name="JsonReaderTest.testReaderGenericRecipeList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project-Starter" />
+      <module name="Foodecipher" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="persistence.*" />
@@ -93,8 +102,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="model in Project-Starter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project-Starter" />
+    <configuration name="NutritionFactsTest.testNutritionFactsSucceedBorderCase" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Foodecipher" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="model.*" />
@@ -102,27 +111,31 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="model" />
-      <option name="TEST_OBJECT" value="package" />
+      <option name="MAIN_CLASS_NAME" value="model.NutritionFactsTest" />
+      <option name="METHOD_NAME" value="testNutritionFactsSucceedBorderCase" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="persistence in Project-Starter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project-Starter" />
+    <configuration name="RatioTest.toStringTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Foodecipher" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="persistence.*" />
+          <option name="PATTERN" value="model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="persistence" />
-      <option name="TEST_OBJECT" value="package" />
+      <option name="PACKAGE_NAME" value="model" />
+      <option name="MAIN_CLASS_NAME" value="model.RatioTest" />
+      <option name="METHOD_NAME" value="toStringTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="test" type="JUnit" factoryName="JUnit" temporary="true">
-      <module name="Project-Starter" />
+      <module name="Foodecipher" />
       <extension name="coverage" sample_coverage="false">
         <pattern>
           <option name="PATTERN" value="persistence.*" />
@@ -145,17 +158,17 @@
     <list>
       <item itemvalue="Application.Main" />
       <item itemvalue="JUnit.JsonReaderTest.testReaderGenericRecipeList" />
-      <item itemvalue="JUnit.model in Project-Starter" />
-      <item itemvalue="JUnit.persistence in Project-Starter" />
       <item itemvalue="JUnit.test" />
+      <item itemvalue="JUnit.RatioTest.toStringTest" />
+      <item itemvalue="JUnit.NutritionFactsTest.testNutritionFactsSucceedBorderCase" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.NutritionFactsTest.testNutritionFactsSucceedBorderCase" />
         <item itemvalue="JUnit.test" />
+        <item itemvalue="JUnit.RatioTest.toStringTest" />
         <item itemvalue="JUnit.JsonReaderTest.testReaderGenericRecipeList" />
-        <item itemvalue="JUnit.model in Project-Starter" />
-        <item itemvalue="JUnit.persistence in Project-Starter" />
       </list>
     </recent_temporary>
   </component>
@@ -182,6 +195,16 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.util.ConcurrentModificationException" package="java.util" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Foodecipher$RecipeTest_solveMatrixTestSuccess.ic" NAME="RecipeTest.solveMatrixTestSuccess Coverage Results" MODIFIED="1627865889194" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>model.*</FILTER>
@@ -193,7 +216,7 @@
     <SUITE FILE_PATH="coverage/Project_Starter$MatrixTest.ic" NAME="MatrixTest Coverage Results" MODIFIED="1627184715273" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>model.equations.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/Foodecipher$test.ic" NAME="test Coverage Results" MODIFIED="1627871429607" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true">
+    <SUITE FILE_PATH="coverage/Foodecipher$test.ic" NAME="test Coverage Results" MODIFIED="1628281025687" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true">
       <FILTER>persistence.*</FILTER>
       <FILTER>model.*</FILTER>
     </SUITE>

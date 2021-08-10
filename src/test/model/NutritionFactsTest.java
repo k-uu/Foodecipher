@@ -34,6 +34,22 @@ public class NutritionFactsTest {
     }
 
     @Test
+    void testNutritionFactsSucceedBorderCase() {
+
+        expected.put(Nutrients.CARBOHYDRATE, new Ratio(a1, 1));
+        expected.put(Nutrients.FIBRE, new Ratio(a2, 1));
+
+        try {
+            facts1 = new NutritionFacts(1, map);
+        } catch (IllegalArgumentException e) {
+            fail("unexpected exception");
+        }
+
+        assertEquals(1, facts1.getServingSize());
+        assertEquals(expected, facts1.getFacts());
+    }
+
+    @Test
     void testNutritionFactsSucceed() {
 
         try {
@@ -43,7 +59,7 @@ public class NutritionFactsTest {
         }
 
         assertEquals(100, facts1.getServingSize());
-        assertTrue(expected.equals(facts1.getFacts()));
+        assertEquals(expected, facts1.getFacts());
     }
 
     @Test
@@ -53,7 +69,7 @@ public class NutritionFactsTest {
             facts1 = new NutritionFacts(0, map);
             fail("divide by zero");
         } catch (IllegalArgumentException e) {
-
+            // success
         }
     }
 
@@ -64,7 +80,7 @@ public class NutritionFactsTest {
             facts1 = new NutritionFacts(-10, map);
             fail("negative serving size");
         } catch (IllegalArgumentException e) {
-
+            //success
         }
     }
 
