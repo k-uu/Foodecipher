@@ -29,4 +29,13 @@ As a user, I would like to be able to:
 > - load all saved recipes from a file
 
 ### Phase 4: Task 2
-robust class: NutritionFacts - constructor
+Robust class: NutritionFacts - constructor
+
+### Phase 4: Task 3
+Refactoring:
+- remove the association between FoodecipherGUI and RecipeList and add a RecipeList in the RecipesEditor class
+- change multiplicity of RecipeEditor - FoodecipherGUI association
+from 0..1 to 1
+- add a unidirectional association from  RecipeTable to RecipesEditor
+- remove nested RecipesObservable class and RecipesObserver interface
+

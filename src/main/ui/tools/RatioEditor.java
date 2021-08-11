@@ -29,8 +29,6 @@ public class RatioEditor extends AbstractCellEditor implements TableCellEditor, 
 
         this.dialog = dialog;
 
-
-
     }
 
     // MODIFIES: this

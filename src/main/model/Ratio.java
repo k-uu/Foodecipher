@@ -3,8 +3,6 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-import java.util.Objects;
-
 // Represents an immutable non-imaginary ratio / rational number and some operations that can be applied on it
 public class Ratio implements Writable {
 
