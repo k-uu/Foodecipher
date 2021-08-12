@@ -209,7 +209,6 @@ public class FoodecipherGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 table = new RecipeTable(FoodecipherGUI.this);
                 initTab(table);
-                table.requestFocusInWindow();
             }
         });
         menu.add(makeRecipe);
