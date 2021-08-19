@@ -6,11 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b0657cc-ee15-4fe7-b40a-5c96c3a94302" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/ui/FoodecipherApp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/ui/FoodecipherGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/ui/FoodecipherGUI.java" afterDir="false" />
-    </list>
+    <list default="true" id="0b0657cc-ee15-4fe7-b40a-5c96c3a94302" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
